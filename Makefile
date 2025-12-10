@@ -9,10 +9,10 @@ NAME=cub3d
 
 .PHONY: all start $(NAME) $(LIBFT)
 
+all: start $(NAME)
+
 start:
 	@echo "\e[1;33m===============CUB3D===============\e[1;30"
-
-all: start $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "\e[1;32m [CUB3D] Building library...\e[1;30"
