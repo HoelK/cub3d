@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   arg_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 21:10:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/10 21:40:37 by hkeromne         ###   ########.fr       */
+/*   Created: 2025/12/10 21:03:07 by hkeromne          #+#    #+#             */
+/*   Updated: 2025/12/11 05:04:09 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub3d.h"
 
-char	*ft_strdup(const char *s)
+void	check_path(char *path)
 {
-	size_t	i;
-	char	*result;
+	int		fd;
+	size_t	len;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[i])
-	{
-		result[i] = s[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
+	len = ft_strlen(path);
+	if (len < 4 || ft_strcmp(&path[len - 4], ".cub"))
+		ft_exit(INVALID_FORMAT);
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		ft_exit(INVALID_PATH);
+	close(fd);
+}
+
+void	check_args(int ac, char **av)
+{
+	if (ac < 2)
+		ft_exit(TOO_LITT_ARGS);
+	if (ac > 2)
+		ft_exit(TOO_MANY_ARGS);
+	check_path(av[1]);
 }

@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_get_row_id.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 21:10:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/10 21:40:37 by hkeromne         ###   ########.fr       */
+/*   Created: 2025/12/03 03:06:40 by hkeromne          #+#    #+#             */
+/*   Updated: 2025/12/11 19:00:30 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+int		ft_get_row_id(char *content, char **strs)
 {
-	size_t	i;
-	char	*result;
+	int	row;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[i])
-	{
-		result[i] = s[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
+	row = 0;
+	while (strs[row] && ft_strncmp(strs[row], content, ft_strlen(content)))
+		row++;
+	if (strs[row])
+		return (row);
+	return (-1);
 }

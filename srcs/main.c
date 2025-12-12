@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 21:10:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/10 21:40:37 by hkeromne         ###   ########.fr       */
+/*   Created: 2025/12/10 18:47:35 by hkeromne          #+#    #+#             */
+/*   Updated: 2025/12/12 03:38:09 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub3d.h"
 
-char	*ft_strdup(const char *s)
+int	main(int ac, char **av)
 {
-	size_t	i;
-	char	*result;
+	t_data	data;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[i])
-	{
-		result[i] = s[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
+	check_args(ac, av);
+	data = *parse(av[1], &data);
+	return (EXIT_SUCCESS);
 }

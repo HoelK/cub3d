@@ -6,40 +6,11 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 22:13:54 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/10 03:51:27 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/10 18:42:19 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*result;
-
-	i = 0;
-	j = (ft_lento(s1, '\0') + ft_lento(s2, '\0') + 1);
-	result = ft_calloc(sizeof(char), j);
-	if (result == NULL)
-		return (NULL);
-	if (s1 != NULL)
-	{
-		while (s1[i])
-		{
-			result[i] = s1[i];
-			i++;
-		}
-	}
-	if (s2 != NULL)
-	{
-		j = 0;
-		while (s2[j])
-			result[i++] = s2[j++];
-	}
-	result[i] = '\0';
-	return (result);
-}
 
 char	*fill_rest(char *buffer, char *rest)
 {

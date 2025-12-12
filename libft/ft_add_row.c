@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_add_row.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 21:10:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/10 21:40:37 by hkeromne         ###   ########.fr       */
+/*   Created: 2025/12/03 03:07:18 by hkeromne          #+#    #+#             */
+/*   Updated: 2025/12/11 20:57:11 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	**ft_add_row(char *new_row, char **strs)
 {
-	size_t	i;
-	char	*result;
+	int	size;
 
-	i = 0;
-	if (!s)
+	size = ft_doublelen(strs);
+	strs = ft_double_realloc(strs, size, size + 2);
+	if (!strs)
 		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[i])
-	{
-		result[i] = s[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
+	strs[size] = new_row;
+	strs[size + 1] = NULL;
+	return (strs);
 }

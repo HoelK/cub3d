@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_doubledup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 21:10:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/10 21:40:37 by hkeromne         ###   ########.fr       */
+/*   Created: 2025/12/03 03:04:43 by hkeromne          #+#    #+#             */
+/*   Updated: 2025/12/03 03:16:22 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	**ft_doubledup(char **srcs)
 {
-	size_t	i;
-	char	*result;
+	int		i;
+	size_t	size;
+	char	**res;
 
-	i = 0;
-	if (!s)
+	i = -1;
+	size = ft_doublelen(srcs);
+	res = malloc(sizeof(char *) * (size + 1));
+	if (res == NULL)
 		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[i])
+	while (++i < (int)size)
 	{
-		result[i] = s[i];
-		i++;
+		res[i] = ft_strdup(srcs[i]);
+		if (res[i] == NULL)
+			return (ft_double_free(res), NULL);
 	}
-	result[i] = '\0';
-	return (result);
+	res[i] = NULL;
+	return (res);
 }
+

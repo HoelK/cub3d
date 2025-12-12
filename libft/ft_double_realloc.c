@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_double_realloc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 21:10:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/10 21:40:37 by hkeromne         ###   ########.fr       */
+/*   Created: 2025/12/03 03:15:08 by hkeromne          #+#    #+#             */
+/*   Updated: 2025/12/03 03:17:27 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	**ft_double_realloc(char **old, size_t old_ptr_n, size_t new_ptr_n)
 {
-	size_t	i;
-	char	*result;
+	size_t		i;
+	char		**new;
 
 	i = 0;
-	if (!s)
-		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (result == NULL)
-		return (NULL);
-	while (s[i])
+	new = malloc(sizeof(char *) * (new_ptr_n + 1));
+	if (!new)
+		return (ft_double_free(old), NULL);
+	while (i < new_ptr_n && i < old_ptr_n)
 	{
-		result[i] = s[i];
+		new[i] = old[i];
 		i++;
 	}
-	result[i] = '\0';
-	return (result);
+	while (i <= new_ptr_n)
+		new[i++] = NULL;
+	free(old);
+	return (new);
 }

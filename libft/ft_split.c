@@ -5,96 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 21:11:17 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/10/27 21:11:17 by hkeromne         ###   ########.fr       */
+/*   Created: 2025/12/12 03:27:46 by hkeromne          #+#    #+#             */
+/*   Updated: 2025/12/12 03:28:46 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	len_to_char(const char *str, char c)
+static	char	*ft_strndup(const char *s, ssize_t len)
 {
-	int	i;
+	ssize_t	i;
+	char	*res;
+
+	i = -1;
+	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (NULL);
+	while (s[++i] && i < len)
+		res[i] = s[i];
+	res[i] = '\0';
+	return (res);
+}
+
+static	bool	is_sep(char c, const char *sep)
+{
+	while (*sep && *sep != c)
+		sep++;
+	return (c == *sep);
+}
+
+static	size_t	len_to_sep(const char *str, const char *sep)
+{
+	size_t	i;
 
 	i = 0;
-	while (str[i] && str[i] != c)
+	while (str[i] && !is_sep(str[i], sep))
 		i++;
 	return (i);
 }
 
-static int	count_words(const char *str, char sep)
+char	**ft_split(const char *str, const char *sep)
 {
-	int	i;
-	int	word_count;
-
-	i = 0;
-	word_count = 0;
-	while (str[i])
-	{
-		while (str[i] && str[i] == sep)
-			i++;
-		if (str[i] && str[i] != sep)
-			word_count++;
-		while (str[i] && str[i] != sep)
-			i++;
-	}
-	return (word_count);
-}
-
-static char	**ft_alloc_secure(char **res, int id, int len)
-{
-	res[id] = malloc(sizeof(char) * (len + 1));
-	if (res[id] == NULL)
-	{
-		while (id >= 0)
-			free(res[id--]);
-		free(res);
-		res = NULL;
-		return (res);
-	}
-	return (res);
-}
-
-static char	**ft_wordalloc(char **res, const char *str, char c, int word_count)
-{
-	int	i;
-	int	j;
-	int	id;
-	int	len_word;
-
-	i = 0;
-	j = 0;
-	id = 0;
-	while (str[j] && i < word_count)
-	{
-		while (str[j] && str[j] == c)
-			j++;
-		len_word = len_to_char(&str[j], c);
-		res = ft_alloc_secure(res, i, len_word);
-		if (res == NULL)
-			return (res);
-		while (str[j] && str[j] != c)
-			res[i][id++] = str[j++];
-		res[i][id] = '\0';
-		id = 0;
-		i++;
-	}
-	return (res);
-}
-
-char	**ft_split(const char *str, char c)
-{
-	int		i;
-	int		word_count;
+	size_t	size;
 	char	**result;
 
-	i = 0;
-	word_count = count_words(str, c);
-	result = malloc(sizeof(char *) * (word_count + 1));
-	if (result == NULL)
+	if (!str || !*str || !sep || !*sep)
 		return (NULL);
-	while (i <= word_count)
-		result[i++] = NULL;
-	result = ft_wordalloc(result, str, c, word_count);
+	size = 0;
+	result = malloc(sizeof(char *));
+	if (!result)
+		return (NULL);
+	result[0] = NULL;
+	while (*str)
+	{
+		while (*str && is_sep(*str, sep))
+			str++;
+		if (!*str)
+			return (result);
+		result = ft_double_realloc(result, size, size + 1);
+		result[size] = ft_strndup(str, len_to_sep(str, sep));
+		if (!result[size])
+			return (ft_double_free(result), NULL);
+		str += len_to_sep(str, sep);
+		size++;
+	}
 	return (result);
 }
