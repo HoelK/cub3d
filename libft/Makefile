@@ -20,6 +20,7 @@ SRCS=ft_isset.c \
 	 ft_strrchr.c \
 	 ft_strncmp.c \
 	 ft_strcmp.c \
+	 ft_strtok.c \
 	 ft_strnstr.c \
 	 ft_atoi.c \
 	 ft_calloc.c \

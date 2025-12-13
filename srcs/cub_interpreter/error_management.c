@@ -6,9 +6,11 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 01:42:16 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/12 01:44:59 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/13 02:05:37 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "cub3d.h"
 
 void	invalid_error(size_t line, uint8_t error)
 {

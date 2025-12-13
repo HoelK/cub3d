@@ -4,7 +4,8 @@ SRCS=srcs/main.c \
 	 srcs/error.c \
 	 srcs/arg_check.c \
 	 srcs/cub_interpreter/parse.c \
-	 srcs/cub_interpreter/dumper.c
+	 srcs/cub_interpreter/dumper.c \
+	 srcs/cub_interpreter/error_management.c
 LIBFT=libft.a
 LIBFT_DIR=libft/
 OBJS=$(SRCS:.c=.o)

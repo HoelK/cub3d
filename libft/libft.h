@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:23:08 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/12 06:06:34 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/12 21:12:28 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strtok(char *str, const char *delim);
 
 //Strs
 char	*ft_strdup(const char *s);

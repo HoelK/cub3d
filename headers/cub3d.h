@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/12 06:10:17 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/13 01:47:24 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ enum e_err_id
 	TEXTURE,
 	SYNTAX,
 	COLOR,
+	LINK,
 	MAP,
 	ID
 };
@@ -49,6 +50,12 @@ enum e_directions
 	SOUTH,
 	WEST,
 	EAST,
+	F,
+	C
+};
+
+enum e_ydirections
+{
 	FLOOR,
 	CEIL
 };
@@ -68,8 +75,9 @@ typedef struct s_data
 }	t_data;
 
 //CUB Interpreter
-char	***dump(char *file_path);
+int	dump(char *file_path, t_data *data);
 t_data	*parse(char	*path_file, t_data *data);
+void	parse_error(uint8_t mode, uint8_t error, size_t line);
 
 //Arg check
 void	check_path(char *path);
