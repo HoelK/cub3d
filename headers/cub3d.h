@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/13 01:47:24 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/14 01:58:12 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ enum e_err_mode
 	INVALID
 };
 
+enum e_err_sys
+{
+	MALLOC
+};
+
 enum e_err_id
 {
 	TEXTURE,
@@ -42,6 +47,14 @@ enum e_err_id
 	LINK,
 	MAP,
 	ID
+};
+
+enum e_rgb_data
+{
+	LEN,
+	FIELD_LEN,
+	FIELD_VALUE,
+	FIELD_COUNT
 };
 
 enum e_directions
@@ -69,26 +82,25 @@ enum e_colors
 
 typedef struct s_data
 {
-	char		*texture_path[4];
-	uint8_t		colors[2][3];
+	int32_t	max_x;
+	uint32_t	max_y;
 	char		**map;
+	uint8_t		colors[2][3];
+	char		*texture_path[4];
 }	t_data;
 
 //CUB Interpreter
-int	dump(char *file_path, t_data *data);
 t_data	*parse(char	*path_file, t_data *data);
+int		dump(char *file_path, t_data *data);
+int8_t	check_id(const char *id, size_t line, bool check_mod);
+bool	check_link(const char *link, size_t line, t_data *data, int8_t id);
+bool	check_color(const char *color, size_t line, t_data *data, int8_t id);
 void	parse_error(uint8_t mode, uint8_t error, size_t line);
+void	system_error(uint8_t error);
 
 //Arg check
 void	check_path(char *path);
 void	check_args(int ac, char **av);
-
-//Parse
-char	**ft_double_realloc(char **old, size_t old_ptr_n, size_t new_ptr_n);
-bool	check_paths(char *texture_path);
-bool	check_colors(uint8_t **colors);
-bool	check_map(char	**map);
-ssize_t	count_lines(const char *file_path);
 
 //Error Management
 void	write_error(uint8_t error);
