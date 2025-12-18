@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:23:08 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/12 21:12:28 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/18 04:32:12 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@
 # ifndef FD_MAX
 #  define FD_MAX 1024
 # endif
-#ifndef FILE_BUFFER_SIZE
-# define FILE_BUFFER_SIZE 255
-#endif
-
+# ifndef FILE_BUFFER_SIZE
+#  define FILE_BUFFER_SIZE 255
+# endif
 
 typedef struct s_list
 {

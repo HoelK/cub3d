@@ -6,11 +6,26 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 21:50:06 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/11 19:07:03 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/18 04:31:05 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static char	**update_buffer(char **file, char *line, size_t index, size_t *size)
+{
+	if (index == *size)
+	{
+		file = ft_double_realloc(file, *size, *size * 2);
+		if (file == NULL)
+			return (NULL);
+		*size *= 2;
+	}
+	file[index] = ft_strdup(line);
+	if (file[index] == NULL)
+		return (ft_double_free(file), NULL);
+	return (file);
+}
 
 static bool	init_dump(char *file_path, int *fd, char **line, char ***file)
 {
@@ -52,14 +67,10 @@ char	**ft_dump_file(char *file_path)
 	{
 		free(line);
 		line = get_next_line(fd);
-		if (i == size)
-		{
-			file = ft_double_realloc(file, size, size * 2);
-			if (file == NULL)
-				return (NULL);
-			size *= 2;
-		}
-		file[i++] = ft_strdup(line);
+		file = update_buffer(file, line, i, &size);
+		if (!file)
+			return (file);
+		i++;
 	}
 	file = ft_double_realloc(file, size, i + 1);
 	file[i] = NULL;

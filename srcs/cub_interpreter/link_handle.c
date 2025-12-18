@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 21:17:55 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/14 00:34:20 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/18 04:44:33 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ bool	check_link(const char *link, size_t line, t_data *data, int8_t id)
 		return (system_error(MALLOC), false);
 	return (true);
 }
-

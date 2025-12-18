@@ -6,13 +6,13 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 03:06:40 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/11 19:00:30 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/18 04:31:19 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_get_row_id(char *content, char **strs)
+int	ft_get_row_id(char *content, char **strs)
 {
 	int	row;
 

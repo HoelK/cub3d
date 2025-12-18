@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 21:06:15 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/14 01:00:36 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/18 04:45:57 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	check_missing(bool *dirs)
 
 int8_t	check_id(const char *id, size_t line, bool check_mod)
 {
-	size_t	i;
-	static bool	dirs[6] = { true, true, true, true, true, true };
+	size_t		i;
+	static bool	dirs[6] = {true, true, true, true, true, true};
 	const char	*dirs_s[6];
 
 	i = 0;
@@ -51,4 +51,3 @@ int8_t	check_id(const char *id, size_t line, bool check_mod)
 	dirs[i] = false;
 	return (i);
 }
-

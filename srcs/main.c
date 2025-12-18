@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:35 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/13 01:43:30 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/17 22:46:26 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
-	(void) data;
+	init_data(&data);
 	check_args(ac, av);
-	//data = *parse(av[1], &data);
-	dump(av[1], &data);
+	if (!dump(av[1], &data))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
