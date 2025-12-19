@@ -6,19 +6,21 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 20:45:37 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/18 04:56:24 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/19 02:02:02 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "handlers.h"
 
-bool	rgb_standard(uint16_t *rgb_data)
+static bool	rgb_standard(uint16_t *rgb_data)
 {
-	return (rgb_data[LEN] < 12 && rgb_data[FIELD_VALUE] < 256
-		&& rgb_data[FIELD_LEN] < 4 && rgb_data[FIELD_COUNT] < 4);
+	return (rgb_data[LEN] <= RGB_LEN_MAX
+		&& rgb_data[FIELD_VALUE] <= EIGHT_BITS_MAX
+		&& rgb_data[FIELD_LEN] <= RGB_FIELD_LEN_MAX
+		&& rgb_data[FIELD_COUNT] <= RGB_MAX_FIELD);
 }
 
-void	update_field(const char *color, uint16_t *rgb_data)
+static void	update_field(const char *color, uint16_t *rgb_data)
 {
 	rgb_data[FIELD_VALUE] += *color - '0';
 	if (ft_isdigit(*(color + 1)))
@@ -26,7 +28,7 @@ void	update_field(const char *color, uint16_t *rgb_data)
 	rgb_data[FIELD_LEN]++;
 }
 
-void	reset_field(t_data *data, int8_t id, uint16_t *rgb_data)
+static void	reset_field(t_data *data, int8_t id, uint16_t *rgb_data)
 {
 	data->colors[id][rgb_data[FIELD_COUNT] - 1] = rgb_data[FIELD_VALUE];
 	rgb_data[FIELD_VALUE] = 0;
@@ -34,7 +36,7 @@ void	reset_field(t_data *data, int8_t id, uint16_t *rgb_data)
 	rgb_data[FIELD_COUNT]++;
 }
 
-bool	check_rgb(uint16_t *rgb_data, const char *color, size_t line)
+static bool	check_rgb(uint16_t *rgb_data, const char *color, size_t line)
 {
 	if (rgb_data[FIELD_LEN] && rgb_data[FIELD_COUNT] == 3
 		&& !*color && rgb_standard(rgb_data))

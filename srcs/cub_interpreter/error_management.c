@@ -6,11 +6,11 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 01:42:16 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/18 04:46:53 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/19 01:16:24 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "handlers.h"
 
 void	system_error(uint8_t error)
 {

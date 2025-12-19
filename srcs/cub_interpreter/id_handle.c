@@ -6,11 +6,11 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 21:06:15 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/18 04:45:57 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/19 01:14:32 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "handlers.h"
 
 void	check_missing(bool *dirs)
 {

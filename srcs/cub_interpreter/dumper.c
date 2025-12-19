@@ -6,11 +6,11 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 05:52:27 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/18 04:45:00 by hkeromne         ###   ########.fr       */
+/*   Updated: 2025/12/19 03:54:58 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "handlers.h"
 
 bool	map_detected(const char *line)
 {
@@ -21,20 +21,22 @@ bool	map_detected(const char *line)
 	return (*line == '\n' || !*line);
 }
 
-bool	check_syntax(size_t line_n)
+static bool	check_syntax(size_t line_n)
 {
 	if (ft_strtok(NULL, SPACE_CHARS))
 		return (parse_error(INVALID, SYNTAX, line_n), false);
 	return (true);
 }
 
-bool	check_tokens(char *line, size_t line_n, t_data *data)
+static bool	check_tokens(char *line, size_t line_n, t_data *data)
 {
 	int8_t	id;
 	bool	ret;
 	char	*token;
 
 	token = ft_strtok(line, SPACE_CHARS);
+	if (!token || !*token)
+		return (true);
 	id = check_id(token, line_n, false);
 	token = ft_strtok(NULL, SPACE_CHARS);
 	if (id < 4)
@@ -53,11 +55,12 @@ int	dump(char *file_path, t_data *data)
 	char	*line;
 	size_t	line_n;
 
-	ret = true;
-	fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-		return (EXIT_FAILURE);
 	line_n = 1;
+	ret = true;
+	init_data(data);
+	fd = open(file_path, O_RDONLY);
+	if (fd == INVALID_FD)
+		return (EXIT_FAILURE);
 	line = get_next_line(fd);
 	while (line && !map_detected(line))
 	{
@@ -66,7 +69,7 @@ int	dump(char *file_path, t_data *data)
 		free(line);
 		line = get_next_line(fd);
 	}
-	check_id(NULL, 0, true);
+	check_id(NULL, 0, CHECK_MISSING);
 	if (!line)
 		return (parse_error(MISSING, MAP, line_n), delete_data(data), false);
 	if (!check_map(fd, line, line_n, data))
