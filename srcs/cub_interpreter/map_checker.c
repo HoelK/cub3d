@@ -77,6 +77,7 @@ bool	find_player(t_data *data)
 		{
 			if (ft_isset(data->map[x][y], PLAYER_SET))
 			{
+				data->player_dir = data->map[x][y];
 				data->player_x = x;
 				data->player_y = y;
 				return (true);

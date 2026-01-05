@@ -19,6 +19,7 @@ typedef struct s_data
 	uint32_t	map_size;
 	uint8_t		colors[2][3];
 	char		*texture_path[4];
+	char		player_dir;
 	uint32_t	player_x;
 	uint32_t	player_y;
 }	t_data;

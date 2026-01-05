@@ -20,8 +20,8 @@
 # include "../libft/libft.h"
 # include "../srcs/cub_interpreter/cub_interpreter.h"
 # include "../minilibx-linux/mlx.h"
-# define RES_X 1920
-# define RES_Y 1080
+# define RES_X 1280
+# define RES_Y 720
 # define NO_RESIZE false
 
 typedef struct	s_img

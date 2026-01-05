@@ -10,7 +10,7 @@ void	my_mlx_pixel_put(t_img *frame, int x, int y, int color)
 
 bool	init_display(t_display *display)
 {
-	display->main = mlx_init(RES_X, RES_Y, "cub3d", NO_RESIZE);
+	display->main = mlx_init();
 	if (!display->main)
 		return (false);
 	display->window = mlx_new_window(display->main, RES_X, RES_Y, "cub3d");

@@ -12,36 +12,64 @@
 
 #include "cub3d.h"
 
+#define OFFSET (RES_X / 10)
+#define WHITE 0xFFFFFF
+#define ORANGE 0xFFA500
+
 bool	init_display(t_display *display);
 void	my_mlx_pixel_put(t_img *frame, int x, int y, int color);
 void	kill_display(t_display *display);
 void	ft_kill(t_display *display, t_data *data, uint8_t status);
-void	put_buffer_line(t_display *display, int x, int y_start);
+void	put_buffer_line(t_display *display, int x, int y_start, int color);
+void	draw_line(t_display *display, int x0, int y0, int x1, int y1, int color);
+void	draw_square(t_display *display, int startx, int starty, int size, int color);
 
-int	raycast(t_data *data, t_display *display)
+void	draw_square(t_display *display, int startx, int starty, int size, int color)
 {
-	long	ray_x;
-	long	ray_y;
-	long	ray_z;
+	int	len;
+	int	wid;
 
-	ray_x = data->player_x;
-	ray_y = data->player_y;
-	while (data->map[ray_y][ray_x] != '1')
-		ray_x++;
-	if ((ray_x - data->player_x) < 3)
-		ray_x += 3;
-	ray_z = RES_Y / (ray_x - data->player_x);
-	put_buffer_line(display, RES_X / 2, ray_z);
-	return (true);
+	len = startx;
+	wid = starty;
+	while ((wid - starty) < size)
+	{
+		while ((len - startx) < size)
+		{
+			mlx_pixel_put(display->main, display->window, len, wid, color);
+			len++;
+		}
+		len = startx;
+		wid++;
+	}
 }
 
-void	put_buffer_line(t_display *display, int x, int y_start, int color)
+void	draw_map(t_display *display, char **map, char player)
 {
-	int	y_end;
+	int	x;
+	int	y;
 
-	y_end = RES_Y - y_start;
-	while (y_start < y_end)
-		my_mlx_pixel_put(&display->frame, x, y_start++, color);
+	x = 0;
+	y = 0;
+	while (map[y])
+	{
+		while (map[y][x] != 'n' && map[y][x])
+		{
+			draw_square(display, x * 65, y * 65, 64, WHITE);
+			if (map[y][x] == player)
+				draw_square(display, x * 65 + 28, y * 65 + 28, 10, ORANGE);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
+void	signle_cast()
+{
+	int	x;
+	int	y;
+
+	while (map[x][y]
 }
 
 int	main(int ac, char **av)
@@ -54,7 +82,7 @@ int	main(int ac, char **av)
 	ft_bzero(&display, sizeof(t_display *));
 	if (!dump(av[1], &data) || !init_display(&display))
 		ft_kill(&display, &data, EXIT_FAILURE);
-	raycast(&data, &display);
+	draw_map(&display, data.map, data.player_dir);
 	mlx_loop(display.main);
 	kill_display(&display);
 	delete_data(&data);
