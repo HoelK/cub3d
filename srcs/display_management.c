@@ -1,10 +1,10 @@
 #include "cub3d.h"
 
-void	my_mlx_pixel_put(t_img *frame, int x, int y, int color)
+void	my_mlx_pixel_put(t_img *data, t_point px, int color)
 {
 	char	*dst;
 
-	dst = frame->addr + (y * frame->line_length + x * (frame->bits_per_pixel / 8));
+	dst = data->addr + ((int)px.y * data->line_length + (int)px.x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -22,8 +22,6 @@ bool	init_display(t_display *display)
 	display->frame.addr = mlx_get_data_addr(display->frame.img, &display->frame.bits_per_pixel, &display->frame.line_length,
 			&display->frame.endian);
 	if (!display->frame.addr)
-		return (false);
-	if (!mlx_put_image_to_window(display->main, display->window, display->frame.img, 0, 0))
 		return (false);
 	return (true);
 }

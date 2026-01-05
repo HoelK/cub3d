@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 05:36:42 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/19 01:15:33 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/05 13:37:13 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ bool	find_player(t_data *data)
 			if (ft_isset(data->map[x][y], PLAYER_SET))
 			{
 				data->player_dir = data->map[x][y];
-				data->player_x = x;
-				data->player_y = y;
+				data->player_y = x;
+				data->player_x = y;
 				return (true);
 			}
 		}

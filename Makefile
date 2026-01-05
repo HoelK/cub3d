@@ -1,7 +1,11 @@
 CC=cc
 FLAGS=-Wall -Wextra -Werror -g3
 SRCS=srcs/main.c \
+	 srcs/draw.c \
 	 srcs/error.c \
+	 srcs/points.c \
+	 srcs/raycast.c \
+	 srcs/minimap.c \
 	 srcs/arg_check.c \
 	 srcs/display_management.c \
 	 srcs/cub_interpreter/data.c \
