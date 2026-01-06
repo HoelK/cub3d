@@ -39,13 +39,13 @@ void	kill_display(t_display *display)
 
 void	ft_kill(t_game *game, uint8_t status)
 {
-	delete_data(game->data);
-	kill_display(game->display);
+	delete_data(&game->data);
+	kill_display(&game->display);
 	exit (status);
 }
 
 int	close_game(t_game *game)
 {
 	ft_kill((t_game *)game, EXIT_SUCCESS);
-	return (game);
+	return (EXIT_SUCCESS);
 }

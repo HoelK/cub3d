@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/05 19:56:25 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/06 20:35:53 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,29 @@
 # define RES_X 1280
 # define RES_Y 720
 # define NO_RESIZE false
+# define FOV 90
+
 # define WHITE 0xFFFFFF
 # define ORANGE 0xFFA500
 # define GREY 0x808080
+
 # define TIDLE_SIZE 64
-# define PLAYER_SIZE 10
+# define PLAYER_SIZE 2
+
+#define KEY_UP		65362
+#define KEY_DOWN	65364
+#define KEY_LEFT	65361
+#define KEY_RIGHT	65363
+#define KEY_ESC		65307
+
+#define KPRESS		2
+#define BPRESS		4
+#define MOTION		6
+#define DESTROY		17
+
+#define KPRESSMASK	(1L<<0)
+#define BPRESSMASK	(1L<<2)
+#define PMOTIONMASK (1L<<6)
 
 typedef struct	s_point
 {
@@ -40,6 +58,7 @@ typedef struct	s_point
 typedef struct s_player
 {
 	t_point pos;
+	float	angle;
 	t_point	dir;
 	t_point	cam_plane;
 }	t_player;
@@ -93,7 +112,7 @@ void	draw_line(t_display *disp, t_point start, t_point end, int color);
 void	draw_square(t_display *display, t_point start, int size, int color);
 
 //Raycast
-void raycast(t_display *display, t_point player);
+void raycast(t_display *display, t_point player, t_point dir);
 
 //Minimap
 t_point	normalize_tidle(t_point px);
@@ -109,5 +128,6 @@ int		close_game(t_game *game);
 
 //Key events
 void	hooks(t_game *game);
+int	render(t_game *game);
 
 #endif

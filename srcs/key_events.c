@@ -1,25 +1,44 @@
 #include "cub3d.h"
+#define MOVE_SPEED 0.1
 
-#define KEY_UP		65362
-#define KEY_DOWN	65364
-#define KEY_LEFT	65361
-#define KEY_RIGHT	65363
-#define KEY_ESC		65307
+void	move_left(t_game *game)
+{
+	game->player.dir = rotate_point_around(game->player.pos, game->player.dir, -0.174533);
+}
 
-#define KPRESS		2
-#define KRELEASE	3
-#define BPRESS		4
-#define BRELEASE	5
-#define MOTION		6
-#define DESTROY		17
+void	move_right(t_game *game)
+{
+	game->player.dir = rotate_point_around(game->player.pos, game->player.dir, 0.174533);
+}
 
-#define KPRESSMASK	(1L<<0)
-#define KRELMASK	(1L<<1)
-#define BPRESSMASK	(1L<<2)
-#define PMOTIONMASK (1L<<6)
+void	move_forward(t_game *game)
+{
+	float dx = (game->player.dir.x - game->player.pos.x) * MOVE_SPEED;
+	float dy = (game->player.dir.y - game->player.pos.y) * MOVE_SPEED;
+
+	game->player.pos.x += dx;
+	game->player.pos.y += dy;
+	game->player.dir.x += dx;
+	game->player.dir.y += dy;
+}
+
+int	handle_input(int keypress, t_game *game)
+{
+	if (keypress == KEY_ESC)
+		close_game(game);
+	else if (keypress == KEY_LEFT)
+		move_left(game);
+	else if (keypress == KEY_RIGHT)
+		move_right(game);
+	else if (keypress == KEY_UP)
+		move_forward(game);
+	return (0);
+}
 
 void	hooks(t_game *game)
 {
-	mlx_hook(game->display.window, DESTROY, 1L<<2, close_game, game);
+	mlx_key_hook(game->display.window, handle_input, game);
+	mlx_hook(game->display.window, DESTROY, BPRESSMASK, close_game, game);
+	mlx_loop_hook(game->display.main, render, game);
 	mlx_loop(game->display.main);
 }
