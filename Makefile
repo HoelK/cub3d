@@ -7,6 +7,7 @@ SRCS=srcs/main.c \
 	 srcs/raycast.c \
 	 srcs/minimap.c \
 	 srcs/arg_check.c \
+	 srcs/key_events.c \
 	 srcs/display_management.c \
 	 srcs/cub_interpreter/data.c \
 	 srcs/cub_interpreter/dumper.c \
@@ -31,7 +32,7 @@ start:
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "\e[1;33m===============CUB3D===============\e[1;30"
 	@echo "\e[1;32m [CUB3D] Building library...\e[1;30"
-	@$(CC) $(FLAGS) $(OBJS) -o $(NAME) -L./$(LIBFT_DIR) -lft -L./minilibx-linux/ -lmlx -lXext -lX11 -lm -lz
+	@$(CC) $(FLAGS) $(OBJS) -L./$(LIBFT_DIR) -lft -lmlx_Linux -L./minilibx-linux -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 	@echo "\e[1;32m [CUB3D] Build Complete !\e[1;30"
 	
 

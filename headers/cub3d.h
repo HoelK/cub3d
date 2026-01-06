@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
+# include <X11/keysym.h>
 # include "../libft/libft.h"
 # include "../srcs/cub_interpreter/cub_interpreter.h"
 # include "../minilibx-linux/mlx.h"
@@ -39,6 +40,8 @@ typedef struct	s_point
 typedef struct s_player
 {
 	t_point pos;
+	t_point	dir;
+	t_point	cam_plane;
 }	t_player;
 
 typedef struct	s_img
@@ -56,6 +59,13 @@ typedef struct s_display
 	void	*window;
 	t_img	frame;
 }	t_display;
+
+typedef struct s_game
+{
+	t_data		data;
+	t_display	display;
+	t_player	player;
+}	t_game;
 
 enum e_arg_errors
 {
@@ -79,6 +89,7 @@ void	print_point(t_point vec, const char *name);
 t_point rotate_point_around(t_point center, t_point point, double angle);
 
 //Draw
+void	draw_line(t_display *disp, t_point start, t_point end, int color);
 void	draw_square(t_display *display, t_point start, int size, int color);
 
 //Raycast
@@ -93,6 +104,10 @@ void	draw_map(t_display *display, char **map, t_point player);
 bool	init_display(t_display *display);
 void	kill_display(t_display *display);
 void	my_mlx_pixel_put(t_img *data, t_point px, int color);
-void	ft_kill(t_display *display, t_data *data, uint8_t status);
+void	ft_kill(t_game *game, uint8_t status);
+int		close_game(t_game *game);
+
+//Key events
+void	hooks(t_game *game);
 
 #endif

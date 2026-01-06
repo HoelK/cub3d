@@ -14,23 +14,19 @@
 
 int	main(int ac, char **av)
 {
-	t_data		data;
-	t_player	player;
-	t_display	display;
+	t_game		game;
 
 	check_args(ac, av);
-	ft_bzero(&data, sizeof(t_data *));
-	ft_bzero(&display, sizeof(t_display *));
-	if (!dump(av[1], &data) || !init_display(&display))
-		ft_kill(&display, &data, EXIT_FAILURE);
+	ft_bzero(&game, sizeof(t_game *));
+	if (!dump(av[1], &game.data) || !init_display(&game.display))
+		ft_kill(&game, EXIT_FAILURE);
 
-	player.pos = get_point(data.player_x, data.player_y);
-	draw_map(&display, data.map, player.pos);
-	raycast(&display, player.pos);
+	game.player.pos = get_point(game.data.player_x, game.data.player_y);
+	draw_map(&game.display, game.data.map, game.player.pos);
+	raycast(&game.display, game.player.pos);
 
-	mlx_put_image_to_window(display.main, display.window, display.frame.img, 0, 0);
-	mlx_loop(display.main);
-	kill_display(&display);
-	delete_data(&data);
+	mlx_put_image_to_window(game.display.main, game.display.window, game.display.frame.img, 0, 0);
+	hooks(&game);
+	mlx_loop(game.display.main);
 	return (EXIT_SUCCESS);
 }
