@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/07 21:39:53 by hkeromne          #+#    #+#             */
+/*   Updated: 2026/01/07 21:39:54 by hkeromne         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	draw_line(t_display *disp, t_point start, t_point end, int color)
@@ -44,4 +56,3 @@ void	draw_square(t_display *display, t_point start, int size, int color)
 		px.y++;
 	}
 }
-

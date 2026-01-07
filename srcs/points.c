@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   points.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/07 21:55:18 by hkeromne          #+#    #+#             */
+/*   Updated: 2026/01/07 21:55:25 by hkeromne         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	print_point(t_point vec, const char *name)
@@ -14,20 +26,19 @@ t_point	get_point(float x, float y)
 	return (p);
 }
 
-t_point rotate_point_around(t_point center, t_point point, double angle)
+t_point	rotate_point_around(t_point center, t_point point, double angle)
 {
-    t_point result;
-    
-    double rel_x = point.x - center.x;
-    double rel_y = point.y - center.y;
-    
-    double rotated_x = rel_x * cos(angle) - rel_y * sin(angle);
-    double rotated_y = rel_x * sin(angle) + rel_y * cos(angle);
-    
-    result.x = rotated_x + center.x;
-    result.y = rotated_y + center.y;
-    result.x = rotated_x + center.x;
-    result.y = rotated_y + center.y;
-    
-    return result;
+	t_point	rel;
+	t_point	result;
+	t_point	rotated;
+
+	rel.x = point.x - center.x;
+	rel.y = point.y - center.y;
+	rotated.x = rel.x * cos(angle) - rel.y * sin(angle);
+	rotated.y = rel.x * sin(angle) + rel.y * cos(angle);
+	result.x = rotated.x + center.x;
+	result.y = rotated.y + center.y;
+	result.x = rotated.x + center.x;
+	result.y = rotated.y + center.y;
+	return (result);
 }

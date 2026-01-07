@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/07 21:40:56 by hkeromne          #+#    #+#             */
+/*   Updated: 2026/01/07 21:40:57 by hkeromne         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_point	normalize_tidle(t_point px)
@@ -30,13 +42,14 @@ void	draw_map(t_display *display, char **map, t_point player)
 			color = WHITE;
 			if (map[y][x] == '1')
 				color = GREY;
-			draw_square(display, normalize_tidle(get_point(x, y)), TIDLE_SIZE, color);
+			draw_square(display, normalize_tidle(get_point(x, y)),
+				TIDLE_SIZE, color);
 			if (x == player.x && y == player.y)
-				draw_square(display, normalize_player(get_point(x, y)), PLAYER_SIZE, ORANGE);
+				draw_square(display, normalize_player(get_point(x, y)),
+					PLAYER_SIZE, ORANGE);
 			x++;
 		}
 		x = 0;
 		y++;
 	}
 }
-

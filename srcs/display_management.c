@@ -1,11 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display_management.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/07 21:42:57 by hkeromne          #+#    #+#             */
+/*   Updated: 2026/01/07 21:46:17 by hkeromne         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	my_mlx_pixel_put(t_img *data, t_point px, int color)
 {
 	char	*dst;
 
-	dst = data->addr + ((int)px.y * data->line_length + (int)px.x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	dst = data->addr + ((int)px.y * data->line_length
+			+ (int)px.x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 bool	init_display(t_display *display)
@@ -19,7 +32,9 @@ bool	init_display(t_display *display)
 	display->frame.img = mlx_new_image(display->main, RES_X, RES_Y);
 	if (!display->frame.img)
 		return (false);
-	display->frame.addr = mlx_get_data_addr(display->frame.img, &display->frame.bits_per_pixel, &display->frame.line_length,
+	display->frame.addr = mlx_get_data_addr(display->frame.img,
+			&display->frame.bits_per_pixel,
+			&display->frame.line_length,
 			&display->frame.endian);
 	if (!display->frame.addr)
 		return (false);
