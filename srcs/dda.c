@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dda.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/08 04:07:22 by hkeromne          #+#    #+#             */
+/*   Updated: 2026/01/08 04:07:37 by hkeromne         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static t_point	get_delta(t_point dir)
@@ -40,13 +52,13 @@ static void	update_dda(t_ddata *dda, char mod)
 	{
 		dda->side_dist.x += dda->delta.x;
 		dda->mapX += dda->stepX;
-		dda->side = 0;
+		dda->side = false;
 	}
 	if (mod == 'Y')
 	{
 		dda->side_dist.y += dda->delta.y;
 		dda->mapY += dda->stepY;
-		dda->side = 1;
+		dda->side = true;
 	}
 }
 
@@ -57,9 +69,8 @@ static float	get_walldist(t_ddata *dda, t_point player, t_point dir)
 	return ((dda->mapY - player.y + (1 - dda->stepY) / 2) / dir.y);
 }
 
-t_point	dda(t_point player, t_point dir, char **map)
+t_ddata	dda(t_point player, t_point dir, char **map)
 {
-	t_point	hit;
 	t_ddata	dda;
 
 	init_dda(&dda, player, dir);
@@ -71,7 +82,7 @@ t_point	dda(t_point player, t_point dir, char **map)
 			update_dda(&dda, 'Y');
 	}
 	dda.perpWallDist = get_walldist(&dda, player, dir);
-	hit.x = player.x + dir.x * dda.perpWallDist;
-	hit.y = player.y + dir.y * dda.perpWallDist;
-	return (hit);
+	dda.hit_pos.x = player.x + dir.x * dda.perpWallDist;
+	dda.hit_pos.y = player.y + dir.y * dda.perpWallDist;
+	return (dda);
 }

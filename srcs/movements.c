@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:53:11 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/07 22:14:14 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/08 02:44:19 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,9 @@ void	move_forward(t_game *game)
 void	move_backward(t_game *game)
 {
 	game->player.pos.x += -game->player.dir.x * MOVE_SPEED;
+	if (game->data.map[(int)game->player.pos.y][(int)game->player.pos.x] == '1')
+		game->player.pos.x -= -game->player.dir.x * MOVE_SPEED;
 	game->player.pos.y += -game->player.dir.y * MOVE_SPEED;
 	if (game->data.map[(int)game->player.pos.y][(int)game->player.pos.x] == '1')
-	{
-		game->player.pos.x += game->player.dir.x * MOVE_SPEED;
-		game->player.pos.y += game->player.dir.y * MOVE_SPEED;
-	}
+		game->player.pos.y -= -game->player.dir.y * MOVE_SPEED;
 }

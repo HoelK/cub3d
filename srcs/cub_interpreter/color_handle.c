@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 20:45:37 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/19 02:02:02 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/08 03:44:59 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ bool	check_color(const char *color, size_t line, t_data *data, int8_t id)
 		rgb_data[LEN]++;
 		color++;
 	}
+	data->colors[id][rgb_data[FIELD_COUNT] - 1] = rgb_data[FIELD_VALUE];
 	return (check_rgb(rgb_data, color, line));
 }

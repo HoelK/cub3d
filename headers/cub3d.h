@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/08 01:07:55 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/08 03:00:35 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,13 @@ typedef struct s_display
 
 typedef struct s_ddata
 {
-	int		side;
+	bool	side;
 	int		mapX;
 	int		mapY;
 	int		stepX;
 	int		stepY;
 	t_point	delta;
+	t_point	hit_pos;
 	t_point	side_dist;
 	float	perpWallDist;
 }	t_ddata;
@@ -142,7 +143,7 @@ void		draw_line(t_display *disp, t_point start, t_point end, int color);
 void		draw_square(t_display *display, t_point start, int size, int color);
 
 //DDA
-t_point	dda(t_point player, t_point dir, char **map);
+t_ddata	dda(t_point player, t_point dir, char **map);
 
 //Raycast
 void		raycast(t_game *game);
