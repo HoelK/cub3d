@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:39:36 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/07 21:39:36 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/07 22:53:21 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	render(t_game *game)
 {
 	handle_input(game);
 	draw_map(&game->display, game->data.map, game->player.pos);
-	raycast(&game->display, game->player.pos, game->player.dir);
+	raycast(game);
 	frame_timer(game);
 	mlx_put_image_to_window(game->display.main, game->display.window,
 		game->display.frame.img, 0, 0);

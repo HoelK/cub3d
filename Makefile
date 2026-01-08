@@ -1,6 +1,7 @@
 CC=cc
 FLAGS=-Wall -Wextra -Werror -g3
 SRCS=srcs/main.c \
+	 srcs/dda.c \
 	 srcs/init.c \
 	 srcs/draw.c \
 	 srcs/error.c \
