@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:44:43 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 04:27:05 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	raycast(t_game *game)
 		game->dda = dda(game->player.pos, game->data.map, &ray);
 		put_frame(game, ray);
 		// MINIMAP RAYS
-		//draw_line(&game->display, normalize_tidle(game->player.pos),
-		//		normalize_tidle(game->dda.hit_pos), ORANGE);
+		draw_line(&game->display.minimap, normalize_tidle(game->player.pos),
+				normalize_tidle(game->dda.hit_pos), ORANGE);
 	}
 }

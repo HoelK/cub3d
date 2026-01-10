@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:39:36 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:25:57 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 05:43:16 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	render(t_game *game)
 {
 	handle_input(game);
 	draw_map(&game->display, game->data.map, game->player.pos);
-	draw_ceil(&game->display, rgb_to_hex(game->data.colors[CEIL]));
-	draw_floor(&game->display, rgb_to_hex(game->data.colors[FLOOR]));
+	draw_ceil(&game->display.frame, rgb_to_hex(game->data.colors[CEIL]));
+	draw_floor(&game->display.frame, rgb_to_hex(game->data.colors[FLOOR]));
 	raycast(game);
+	map_to_frame(&game->display.frame, &game->display.minimap);
 	frame_timer(game);
 	mlx_put_image_to_window(game->display.main, game->display.window,
 		game->display.frame.img, 0, 0);

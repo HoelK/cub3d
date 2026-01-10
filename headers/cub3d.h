@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:48:27 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 05:52:15 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ORANGE 0xFFA500
 # define GREY 0x808080
 
-# define TIDLE_SIZE 64
+# define TIDLE_SIZE 10
 # define PLAYER_SIZE 2
 
 # define KEY_AMOUNT	6
@@ -98,6 +98,7 @@ typedef struct s_display
 	void	*main;
 	void	*window;
 	t_img	frame;
+	t_img	minimap;
 	t_img	texture[4];
 }	t_display;
 
@@ -166,10 +167,11 @@ void		print_point(t_point vec, const char *name);
 t_point		rotate_point_around(t_point center, t_point point, double angle);
 
 //Draw
-void		draw_ceil(t_display *display, int color);
-void		draw_floor(t_display *display, int color);
-void		draw_line(t_display *disp, t_point start, t_point end, int color);
-void		draw_square(t_display *display, t_point start, int size, int color);
+void		my_mlx_pixel_put(t_img *data, t_point px, int color);
+void		draw_ceil(t_img *frame, int color);
+void		draw_floor(t_img *frame, int color);
+void		draw_line(t_img *img, t_point start, t_point end, int color);
+void		draw_square(t_img *img, t_point start, int size, int color);
 
 //DDA
 t_point		get_delta(t_point dir);
@@ -184,11 +186,11 @@ void		raycast(t_game *game);
 t_point		normalize_tidle(t_point px);
 t_point		normalize_player(t_point px);
 void		draw_map(t_display *display, char **map, t_point player);
+void		map_to_frame(t_img *frame, t_img *minimap);
 
 //Display management
-bool	init_display(t_display *display, t_data *data);
+bool		init_display(t_display *display, t_data *data);
 void		kill_display(t_display *display);
-void		my_mlx_pixel_put(t_img *data, t_point px, int color);
 void		ft_kill(t_game *game, uint8_t status);
 int			close_game(t_game *game);
 
@@ -198,12 +200,14 @@ int			render(t_game *game);
 int			handle_input(t_game *game);
 
 //Movements
-void	turn_right(t_game *game);
-void	turn_left(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
 void	move_forward(t_game *game);
 void	move_backward(t_game *game);
+
+//Mouse
+void	turn_right(t_game *game, int diff, bool mouse);
+void	turn_left(t_game *game, int diff, bool mouse);
 
 //Init
 void		game_init(char *file, t_game *game);

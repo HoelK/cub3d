@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:37:51 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/09 20:34:57 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 03:15:59 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static void	player_init(t_game *game, t_point data)
 	init_dir(game);
 	init_angle(game);
 	game->time = get_time();
-	game->player.pos.x = data.x;
-	game->player.pos.y = data.y;
+	game->player.pos.x = data.x + 0.5;
+	game->player.pos.y = data.y + 0.5;
 }
 
 void	game_init(char *file, t_game *game)

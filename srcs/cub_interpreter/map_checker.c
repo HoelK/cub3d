@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 05:36:42 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/05 13:37:13 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 04:58:30 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ bool	check_map_line(char *line, size_t line_n)
 
 bool	flood_fill(char **map, int x, int y, bool *closed)
 {
-	if (x < 0 || y < 0 || !map[x] || !map[x][y]
-		|| map[x][y] == '\n' || map[x][y] == ' ')
+	if (x < 0 || y < 0 || !map[y] || !map[y][x]
+		|| map[y][x] == '\n' || map[y][x] == ' ')
 	{
 		if (*closed)
-			parse_error(INVALID, MAP, x + 1);
+			parse_error(INVALID, MAP, y + 1);
 		*closed = false;
 		return (closed);
 	}
-	else if (map[x][y] == '1' || map[x][y] == 'x')
+	else if (map[y][x] == '1' || map[y][x] == 'x')
 		return (true);
-	map[x][y] = 'x';
+	map[y][x] = 'x';
 	flood_fill(map, x + 1, y, closed);
 	flood_fill(map, x - 1, y, closed);
 	flood_fill(map, x, y + 1, closed);

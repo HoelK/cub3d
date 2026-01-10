@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:42:57 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:49:46 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 05:28:28 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,19 @@ bool	init_display(t_display *display, t_data *data)
 			&display->frame.endian);
 	if (!display->frame.addr)
 		return (false);
+	display->minimap.height = ft_doublelen(data->map) * (TIDLE_SIZE + 1);
+	display->minimap.width = (ft_strlen(data->map[0]) - 1) * (TIDLE_SIZE + 1);
+	display->minimap.img = mlx_new_image(display->main,
+		display->minimap.width,
+		display->minimap.height);
+	if (!display->minimap.img)
+		return (false);
+	display->minimap.addr = mlx_get_data_addr(display->minimap.img,
+			&display->minimap.bits_per_pixel,
+			&display->minimap.line_length,
+			&display->minimap.endian);
+	if (!display->minimap.addr)
+		return (false);
 	if (!init_textures(display, data))
 		return (false);
 	return (true);
@@ -64,6 +77,8 @@ void	kill_display(t_display *display)
 	i = -1;
 	if (display->frame.img)
 		mlx_destroy_image(display->main, display->frame.img);
+	if (display->minimap.img)
+		mlx_destroy_image(display->main, display->minimap.img);
 	while (++i < 4)
 	{
 		if (display->texture[i].img)

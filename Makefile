@@ -3,8 +3,8 @@ FLAGS=-Wall -Wextra -Werror -O3
 SRCS=srcs/main.c \
 	 srcs/dda.c \
 	 srcs/init.c \
-	 srcs/view.c \
 	 srcs/draw.c \
+	 srcs/mouse.c \
 	 srcs/error.c \
 	 srcs/utils.c \
 	 srcs/points.c \
