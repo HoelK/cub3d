@@ -6,92 +6,97 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/08 04:07:01 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 01:48:14 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float	angle_to_radian(int angle)
+#define N_COL 0x008000 //green
+#define S_COL 0		   //black
+#define E_COL 0xFFA500 //
+#define W_COL 0xFF0000 //red
+
+int		get_texture_id(t_ddata dda, t_game *game)
 {
-	return (angle * (PI / 180.0));
+	(void) game;
+	if (dda.side == true)
+	{
+		if (dda.stepY < 0)
+			return (EAST);
+		return (WEST);
+	}
+	if (dda.stepX < 0)
+		return (NORTH);
+	return (SOUTH);
 }
 
-void	show(t_img *img, t_ddata dda, int x_pos)
+void vertical_draw(t_game *game, t_ray ray)
 {
-	int		i;
-	t_point	px;
-	int		line_h;
-	int		draw_end;
-	int		draw_start;
+	int     id;
+	int     texX;
+	int     texY;
+	int     color;
+	double  step;
+	double  texPos;
 
-	line_h = (int)(RES_Y / dda.perpWallDist);
-	draw_start = -line_h / 2 + RES_Y / 2;
-	draw_end = line_h / 2 + RES_Y / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	if (draw_end >= RES_Y)
-		draw_end = RES_Y - 1;
-	px.x = x_pos;
-	i = draw_start - 1;
-	while (i++ < draw_end)
+	id = get_texture_id(game->dda, game);
+	texX = (int)(game->dda.wall_x * (double)(game->display.texture[id].width));
+	if (!game->dda.side && ray.dir.x > 0)
+		texX = game->display.texture[id].width - texX - 1;
+	if (game->dda.side && ray.dir.y < 0)
+		texX = game->display.texture[id].width - texX - 1;
+	step = (double)game->display.texture[id].height / (double)ray.line_len;
+	texPos = (double)(ray.line_start - RES_Y / 2 + ray.line_len / 2) * step;
+	for(int y = ray.line_start; y < ray.line_end; y++)
 	{
-		px.y = i;
-		my_mlx_pixel_put(img, px, ORANGE);
+		texY = (int)texPos;
+		texPos += step;
+		color = *(int *)(game->display.texture[id].addr + 
+				texY * game->display.texture[id].line_length + texX * 4);
+		my_mlx_pixel_put(&game->display.frame, get_point(ray.id, y), color);
 	}
 }
 
-void	draw_ceil(t_display *display, int color)
+void	init_ray(t_ray *ray, t_ddata *dda)
 {
-	int	y;
-
-	y = -1;
-	while (++y < (RES_Y / 2))
-		draw_line(display, get_point(0, y),
-			get_point(display->frame.line_length, y), color);
+	ray->line_len = (int)(RES_Y / dda->wall_dist);
+	ray->line_start = -ray->line_len / 2 + RES_Y / 2;
+	ray->line_end = ray->line_len / 2 + RES_Y / 2;
+	if (ray->line_start < 0)
+		ray->line_start = 0;
+	if (ray->line_end >= RES_Y)
+		ray->line_end = RES_Y - 1;
 }
 
-void	draw_floor(t_display *display, int color)
+void	show(t_game *game, t_ray ray)
 {
-	int	x;
+	int		i;
+	t_point	px;
 
-	x = RES_Y / 2;
-	while (++x < (RES_Y))
-		draw_line(display, get_point(0, x),
-			get_point(display->frame.line_length, x), color);
-}
-
-int	rgb_to_hex(uint8_t *rgb)
-{
-	return (((rgb[R] & 0xff) << 16) + ((rgb[G] & 0xff) << 8) + (rgb[B] & 0xff));
+	px.x = ray.id;
+	init_ray(&ray, &game->dda);
+	i = ray.line_start - 1;
+	vertical_draw(game, ray);
 }
 
 void	raycast(t_game *game)
 {
 	int		i;
-	t_ddata	dda_data;
-	float	angle;
-	float	off;
-	t_point	raydir;
+	float	offset;
+	t_ray	ray;
 
 	i = -1;
-	draw_ceil(&game->display, rgb_to_hex(game->data.colors[CEIL]));
-	draw_floor(&game->display, rgb_to_hex(game->data.colors[FLOOR]));
-	angle = game->player.angle;
-	raydir.x = cos(angle);
-	raydir.y = sin(angle);
-	dda_data = dda(game->player.pos, raydir, game->data.map);
-	//draw_line(&game->display, normalize_tidle(game->player.pos),
-	//	normalize_tidle(dda_data.hit_pos), ORANGE);
 	while (++i < RES_X)
 	{
-		off = game->player.angle - angle_to_radian(FOV) / 2.0
-			+ i * (angle_to_radian(FOV) / (RES_X - 1));
-		raydir.x = cos(off);
-		raydir.y = sin(off);
-		show(&game->display.frame, dda_data, i);
-		dda_data = dda(game->player.pos, raydir, game->data.map);
+		offset = (float)(((2.0 * i) / RES_X) - 1);
+		ray.id = i;
+		ray.dir.x = game->player.dir.x + game->player.cplane.x * offset;
+		ray.dir.y = game->player.dir.y + game->player.cplane.y * offset;
+		game->dda = dda(game->player.pos, game->data.map, &ray);
+		show(game, ray);
+		// MINIMAP RAYS
 		//draw_line(&game->display, normalize_tidle(game->player.pos),
-		///		normalize_tidle(dda_data.hit_pos), ORANGE);
+		//		normalize_tidle(dda_data.hit_pos), ORANGE);
 	}
 }

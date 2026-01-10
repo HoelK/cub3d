@@ -6,35 +6,52 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:39:53 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/07 21:39:54 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/09 22:01:05 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	draw_ceil(t_display *display, int color)
+{
+	int	y;
+
+	y = -1;
+	while (++y < (RES_Y / 2))
+		draw_line(display, get_point(0, y),
+			get_point(display->frame.line_length, y), color);
+}
+
+void	draw_floor(t_display *display, int color)
+{
+	int	x;
+
+	x = RES_Y / 2;
+	while (++x < (RES_Y))
+		draw_line(display, get_point(0, x),
+			get_point(display->frame.line_length, x), color);
+}
+
 void	draw_line(t_display *disp, t_point start, t_point end, int color)
 {
-	double	delta_x;
-	double	delta_y;
+	t_point	delta;
+	t_point	pixel;
 	double	pixels;
-	double	pixel_x;
-	double	pixel_y;
 
-	delta_x = end.x - start.x;
-	delta_y = end.y - start.y;
-	if (fabs(delta_x) > fabs(delta_y))
-		pixels = fabs(delta_x);
-	else
-		pixels = fabs(delta_y);
-	delta_x /= pixels;
-	delta_y /= pixels;
-	pixel_x = start.x;
-	pixel_y = start.y;
+	delta.x = end.x - start.x;
+	delta.y = end.y - start.y;
+	pixels = fabs(delta.y);
+	if (fabs(delta.x) > fabs(delta.y))
+		pixels = fabs(delta.x);
+	delta.x /= pixels;
+	delta.y /= pixels;
+	pixel.x = start.x;
+	pixel.y = start.y;
 	while (pixels > 0)
 	{
-		my_mlx_pixel_put(&disp->frame, get_point(pixel_x, pixel_y), color);
-		pixel_x += delta_x;
-		pixel_y += delta_y;
+		my_mlx_pixel_put(&disp->frame, pixel, color);
+		pixel.x += delta.x;
+		pixel.y += delta.y;
 		pixels--;
 	}
 }

@@ -5,6 +5,7 @@ SRCS=srcs/main.c \
 	 srcs/init.c \
 	 srcs/draw.c \
 	 srcs/error.c \
+	 srcs/utils.c \
 	 srcs/points.c \
 	 srcs/raycast.c \
 	 srcs/minimap.c \

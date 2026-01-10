@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:53:11 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/08 02:44:19 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/09 22:28:22 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	move_left(t_game *game)
 	game->player.angle -= ROTATE_SPEED;
 	game->player.dir.x = cos(game->player.angle);
 	game->player.dir.y = sin(game->player.angle);
+	game->player.cplane.x = -game->player.dir.y;
+	game->player.cplane.y = game->player.dir.x;
 }
 
 void	move_right(t_game *game)
@@ -24,6 +26,8 @@ void	move_right(t_game *game)
 	game->player.angle += ROTATE_SPEED;
 	game->player.dir.x = cos(game->player.angle);
 	game->player.dir.y = sin(game->player.angle);
+	game->player.cplane.x = -game->player.dir.y;
+	game->player.cplane.y = game->player.dir.x;
 }
 
 void	move_forward(t_game *game)

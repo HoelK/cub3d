@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:37:51 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/07 21:37:51 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:34:57 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	player_init(t_game *game, t_point data)
 void	game_init(char *file, t_game *game)
 {
 	ft_bzero(game, sizeof(t_game));
-	if (!dump(file, &game->data) || !init_display(&game->display))
+	if (!dump(file, &game->data) || !init_display(&game->display, &game->data))
 		ft_kill(game, EXIT_FAILURE);
 	player_init(game, get_point(game->data.player_x, game->data.player_y));
 }

@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:42:57 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/07 21:46:17 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/09 22:20:02 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,24 @@ void	my_mlx_pixel_put(t_img *data, t_point px, int color)
 	*(unsigned int *)dst = color;
 }
 
-bool	init_display(t_display *display)
+bool	init_textures(t_display *display, t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		display->texture[i].img = mlx_xpm_file_to_image(display->main, data->texture_path[i], &display->texture[i].width, &display->texture[i].height);
+		if (!display->texture[i].img)
+			return (false);
+		display->texture[i].addr = mlx_get_data_addr(display->texture[i].img, &display->texture[i].bits_per_pixel, &display->texture[i].line_length, &display->texture[i].endian);
+		if (!display->texture[i].addr)
+			return (false);
+	}
+	return (true);
+}
+
+bool	init_display(t_display *display, t_data *data)
 {
 	display->main = mlx_init();
 	if (!display->main)
@@ -38,13 +55,23 @@ bool	init_display(t_display *display)
 			&display->frame.endian);
 	if (!display->frame.addr)
 		return (false);
+	if (!init_textures(display, data))
+		return (false);
 	return (true);
 }
 
 void	kill_display(t_display *display)
 {
+	int	i;
+
+	i = -1;
 	if (display->frame.img)
 		mlx_destroy_image(display->main, display->frame.img);
+	while (++i < 4)
+	{
+		if (display->texture[i].img)
+			mlx_destroy_image(display->main, display->texture[i].img);
+	}
 	if (display->window)
 		mlx_destroy_window(display->main, display->window);
 	if (display->main)

@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/08 03:00:35 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/09 23:29:53 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,20 @@ typedef struct	s_point
 typedef struct s_player
 {
 	t_point	pos;
-	float	angle;
 	t_point	dir;
-	t_point	cam_plane;
+	t_point	cplane;
+	float	angle;
 }	t_player;
 
 typedef struct	s_img
 {
 	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
+	int		width;
+	int		height;
 	int		endian;
+	int		line_length;
+	int		bits_per_pixel;
 }	t_img;
 
 typedef struct s_display
@@ -84,6 +86,7 @@ typedef struct s_display
 	void	*main;
 	void	*window;
 	t_img	frame;
+	t_img	texture[4];
 }	t_display;
 
 typedef struct s_ddata
@@ -96,17 +99,27 @@ typedef struct s_ddata
 	t_point	delta;
 	t_point	hit_pos;
 	t_point	side_dist;
-	float	perpWallDist;
+	float	wall_dist;
+	float	wall_x;
 }	t_ddata;
+
+typedef struct s_ray
+{
+	t_point	dir;
+	int		id;
+	int		line_start;
+	int		line_end;
+	int		line_len;
+}	t_ray;
 
 typedef struct s_game
 {
-	t_data		data;
+	uint32_t	time;
 	t_ddata		dda;
+	t_data		data;
 	t_player	player;
 	t_display	display;
 	bool		keys[KEY_AMOUNT];
-	uint32_t	time;
 }	t_game;
 
 enum e_arg_errors
@@ -139,11 +152,13 @@ void		print_point(t_point vec, const char *name);
 t_point		rotate_point_around(t_point center, t_point point, double angle);
 
 //Draw
+void		draw_ceil(t_display *display, int color);
+void		draw_floor(t_display *display, int color);
 void		draw_line(t_display *disp, t_point start, t_point end, int color);
 void		draw_square(t_display *display, t_point start, int size, int color);
 
 //DDA
-t_ddata	dda(t_point player, t_point dir, char **map);
+t_ddata	dda(t_point player, char **map, t_ray *ray);
 
 //Raycast
 void		raycast(t_game *game);
@@ -154,7 +169,7 @@ t_point		normalize_player(t_point px);
 void		draw_map(t_display *display, char **map, t_point player);
 
 //Display management
-bool		init_display(t_display *display);
+bool	init_display(t_display *display, t_data *data);
 void		kill_display(t_display *display);
 void		my_mlx_pixel_put(t_img *data, t_point px, int color);
 void		ft_kill(t_game *game, uint8_t status);
@@ -177,5 +192,9 @@ void		game_init(char *file, t_game *game);
 //Renderer
 int			render(t_game *game);
 uint32_t	get_time(void);
+
+//Utils
+int			rgb_to_hex(uint8_t *rgb);
+float		angle_to_radian(int angle);
 
 #endif

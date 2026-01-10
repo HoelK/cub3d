@@ -1,7 +1,7 @@
-NO ./cub3d
-		SO ./cub3d
-       WE ./cub3d
-		EA ./cub3d
+NO textures/bark.xpm
+SO textures/pizzapizz.xpm
+WE textures/durumdurum.xpm
+EA textures/bark.xpm
 
 F 123,123,125
 C 0,0,255
