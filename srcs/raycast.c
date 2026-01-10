@@ -6,16 +6,11 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 01:48:14 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:26:30 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#define N_COL 0x008000 //green
-#define S_COL 0		   //black
-#define E_COL 0xFFA500 //
-#define W_COL 0xFF0000 //red
 
 int		get_texture_id(t_ddata dda, t_game *game)
 {
@@ -69,7 +64,7 @@ void	init_ray(t_ray *ray, t_ddata *dda)
 		ray->line_end = RES_Y - 1;
 }
 
-void	show(t_game *game, t_ray ray)
+void	put_frame(t_game *game, t_ray ray)
 {
 	int		i;
 	t_point	px;
@@ -94,9 +89,9 @@ void	raycast(t_game *game)
 		ray.dir.x = game->player.dir.x + game->player.cplane.x * offset;
 		ray.dir.y = game->player.dir.y + game->player.cplane.y * offset;
 		game->dda = dda(game->player.pos, game->data.map, &ray);
-		show(game, ray);
+		put_frame(game, ray);
 		// MINIMAP RAYS
 		//draw_line(&game->display, normalize_tidle(game->player.pos),
-		//		normalize_tidle(dda_data.hit_pos), ORANGE);
+		//		normalize_tidle(game->dda.hit_pos), ORANGE);
 	}
 }

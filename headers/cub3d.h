@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/09 23:29:53 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:09:56 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,20 @@
 # define TIDLE_SIZE 64
 # define PLAYER_SIZE 2
 
-# define KEY_AMOUNT	4
-# define KEY_UP		65362
-# define KEY_DOWN	65364
+# define KEY_AMOUNT	6
+# define KEY_ESC	65307
 # define KEY_LEFT	65361
 # define KEY_RIGHT	65363
-# define KEY_ESC	65307
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
 
 # define KPRESS		2
 # define KREL		3
 # define BPRESS		4
 # define MOTION		6
-# define DESTROY		17
+# define DESTROY	17
 
 # define KPRESSMASK	(1L<<0)
 # define KRELMASK	(1L<<1)
@@ -132,8 +134,10 @@ enum e_arg_errors
 
 enum e_key_ids
 {
-	KUP_ID,
-	KDOWN_ID,
+	KW_ID,
+	KA_ID,
+	KS_ID,
+	KD_ID,
 	KLEFT_ID,
 	KRIGHT_ID
 };
@@ -181,6 +185,8 @@ int			render(t_game *game);
 int			handle_input(t_game *game);
 
 //Movements
+void	turn_right(t_game *game);
+void	turn_left(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
 void	move_forward(t_game *game);

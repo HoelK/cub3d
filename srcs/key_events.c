@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:53:20 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/07 21:53:20 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:25:10 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 int	handle_input(t_game *game)
 {
 	if (game->keys[KLEFT_ID])
-		move_left(game);
-	else if (game->keys[KRIGHT_ID])
-		move_right(game);
-	else if (game->keys[KUP_ID])
+		turn_left(game);
+	if (game->keys[KRIGHT_ID])
+		turn_right(game);
+	if (game->keys[KW_ID])
 		move_forward(game);
-	else if (game->keys[KDOWN_ID])
+	if (game->keys[KS_ID])
 		move_backward(game);
+	if (game->keys[KD_ID])
+		move_right(game);
+	if (game->keys[KA_ID])
+		move_left(game);
 	return (0);
 }
 
@@ -33,10 +37,14 @@ int	key_press(int keypress, t_game *game)
 		game->keys[KLEFT_ID] = true;
 	else if (keypress == KEY_RIGHT)
 		game->keys[KRIGHT_ID] = true;
-	else if (keypress == KEY_UP)
-		game->keys[KUP_ID] = true;
-	else if (keypress == KEY_DOWN)
-		game->keys[KDOWN_ID] = true;
+	else if (keypress == KEY_W)
+		game->keys[KW_ID] = true;
+	else if (keypress == KEY_S)
+		game->keys[KS_ID] = true;
+	else if (keypress == KEY_A)
+		game->keys[KA_ID] = true;
+	else if (keypress == KEY_D)
+		game->keys[KD_ID] = true;
 	return (0);
 }
 
@@ -46,10 +54,14 @@ int	key_release(int keypress, t_game *game)
 		game->keys[KLEFT_ID] = false;
 	else if (keypress == KEY_RIGHT)
 		game->keys[KRIGHT_ID] = false;
-	else if (keypress == KEY_UP)
-		game->keys[KUP_ID] = false;
-	else if (keypress == KEY_DOWN)
-		game->keys[KDOWN_ID] = false;
+	else if (keypress == KEY_W)
+		game->keys[KW_ID] = false;
+	else if (keypress == KEY_S)
+		game->keys[KS_ID] = false;
+	else if (keypress == KEY_A)
+		game->keys[KA_ID] = false;
+	else if (keypress == KEY_D)
+		game->keys[KD_ID] = false;
 	return (0);
 }
 
