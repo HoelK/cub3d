@@ -1,8 +1,9 @@
 CC=cc
-FLAGS=-Wall -Wextra -Werror -g3
+FLAGS=-Wall -Wextra -Werror -O3
 SRCS=srcs/main.c \
 	 srcs/dda.c \
 	 srcs/init.c \
+	 srcs/view.c \
 	 srcs/draw.c \
 	 srcs/error.c \
 	 srcs/utils.c \
@@ -13,6 +14,7 @@ SRCS=srcs/main.c \
 	 srcs/movements.c \
 	 srcs/arg_check.c \
 	 srcs/key_events.c \
+	 srcs/dda_getters.c \
 	 srcs/display_management.c \
 	 srcs/cub_interpreter/data.c \
 	 srcs/cub_interpreter/dumper.c \

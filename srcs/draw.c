@@ -6,11 +6,20 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:39:53 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/09 22:01:05 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:50:04 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	my_mlx_pixel_put(t_img *data, t_point px, int color)
+{
+	char	*dst;
+
+	dst = data->addr + ((int)px.y * data->line_length
+			+ (int)px.x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
 
 void	draw_ceil(t_display *display, int color)
 {

@@ -6,13 +6,13 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:26:30 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:44:43 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		get_texture_id(t_ddata dda, t_game *game)
+int	get_texture_id(t_ddata dda, t_game *game)
 {
 	(void) game;
 	if (dda.side == true)
@@ -26,30 +26,30 @@ int		get_texture_id(t_ddata dda, t_game *game)
 	return (SOUTH);
 }
 
-void vertical_draw(t_game *game, t_ray ray)
+void	vertical_draw(t_game *game, t_ray ray)
 {
-	int     id;
-	int     texX;
-	int     texY;
-	int     color;
-	double  step;
-	double  texPos;
+	int		y;
+	t_tex	tex;
 
-	id = get_texture_id(game->dda, game);
-	texX = (int)(game->dda.wall_x * (double)(game->display.texture[id].width));
+	y = ray.line_start - 1;
+	tex.id = get_texture_id(game->dda, game);
+	tex.x = (int)(game->dda.wall_x
+			* (double)(game->display.texture[tex.id].width));
 	if (!game->dda.side && ray.dir.x > 0)
-		texX = game->display.texture[id].width - texX - 1;
+		tex.x = game->display.texture[tex.id].width - tex.x - 1;
 	if (game->dda.side && ray.dir.y < 0)
-		texX = game->display.texture[id].width - texX - 1;
-	step = (double)game->display.texture[id].height / (double)ray.line_len;
-	texPos = (double)(ray.line_start - RES_Y / 2 + ray.line_len / 2) * step;
-	for(int y = ray.line_start; y < ray.line_end; y++)
+		tex.x = game->display.texture[tex.id].width - tex.x - 1;
+	tex.step = (double)game->display.texture[tex.id].height
+		/ (double)ray.line_len;
+	tex.pos = (double)(ray.line_start - RES_Y / 2 + ray.line_len / 2) *tex.step;
+	while (++y < ray.line_end)
 	{
-		texY = (int)texPos;
-		texPos += step;
-		color = *(int *)(game->display.texture[id].addr + 
-				texY * game->display.texture[id].line_length + texX * 4);
-		my_mlx_pixel_put(&game->display.frame, get_point(ray.id, y), color);
+		tex.y = (int)tex.pos;
+		tex.pos += tex.step;
+		tex.color = *(int *)(game->display.texture[tex.id].addr
+				+ tex.y * game->display.texture[tex.id].line_length
+				+ tex.x * 4);
+		my_mlx_pixel_put(&game->display.frame, get_point(ray.id, y), tex.color);
 	}
 }
 
@@ -84,8 +84,8 @@ void	raycast(t_game *game)
 	i = -1;
 	while (++i < RES_X)
 	{
-		offset = (float)(((2.0 * i) / RES_X) - 1);
 		ray.id = i;
+		offset = (float)(((2.0 * i) / RES_X) - 1);
 		ray.dir.x = game->player.dir.x + game->player.cplane.x * offset;
 		ray.dir.y = game->player.dir.y + game->player.cplane.y * offset;
 		game->dda = dda(game->player.pos, game->data.map, &ray);

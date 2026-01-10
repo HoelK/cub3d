@@ -1,5 +1,5 @@
 CC=cc
-FLAGS=-Werror -Wall -Wextra -g
+FLAGS=-Werror -Wall -Wextra -O3
 SRCS=ft_isset.c \
 	 ft_isalpha.c \
 	 ft_isdigit.c \

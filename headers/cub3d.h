@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:09:56 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:48:27 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 # include "../srcs/cub_interpreter/cub_interpreter.h"
-# define RES_X 1280
-# define RES_Y 720
+# define RES_X 1920
+# define RES_Y 1080
 # define NO_RESIZE false
 # define FOV 90
 # define PI 3.141592
@@ -82,6 +82,16 @@ typedef struct	s_img
 	int		line_length;
 	int		bits_per_pixel;
 }	t_img;
+
+typedef struct s_tex
+{
+	int     id;
+	int     x;
+	int     y;
+	int     color;
+	double  step;
+	double  pos;
+}	t_tex;
 
 typedef struct s_display
 {
@@ -162,7 +172,10 @@ void		draw_line(t_display *disp, t_point start, t_point end, int color);
 void		draw_square(t_display *display, t_point start, int size, int color);
 
 //DDA
-t_ddata	dda(t_point player, char **map, t_ray *ray);
+t_point		get_delta(t_point dir);
+t_ddata		dda(t_point player, char **map, t_ray *ray);
+float		get_wallx(t_ddata *dda, t_point dir, t_point player);
+float		get_walldist(t_ddata *dda, t_point player, t_point dir);
 
 //Raycast
 void		raycast(t_game *game);
