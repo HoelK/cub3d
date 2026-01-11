@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 02:47:53 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:48:37 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 17:37:08 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_point	get_delta(t_point dir)
 float	get_walldist(t_ddata *dda, t_point player, t_point dir)
 {
 	if (!dda->side)
-		return ((dda->mapX - player.x + (1 - dda->stepX) / 2) / dir.x);
-	return ((dda->mapY - player.y + (1 - dda->stepY) / 2) / dir.y);
+		return ((dda->map_x - player.x + (1 - dda->step_x) / 2) / dir.x);
+	return ((dda->map_y - player.y + (1 - dda->step_y) / 2) / dir.y);
 }
 
 float	get_wallx(t_ddata *dda, t_point dir, t_point player)

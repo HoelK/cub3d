@@ -6,13 +6,31 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:42:57 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 05:28:28 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 19:39:16 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	init_textures(t_display *display, t_data *data)
+static bool	init_minimap(t_display *display, t_data *data)
+{
+	display->minimap.height = ft_doublelen(data->map) * (TIDLE_SIZE + 1);
+	display->minimap.width = (ft_strmaxlen(data->map) - 1) * (TIDLE_SIZE + 1);
+	display->minimap.img = mlx_new_image(display->main,
+			display->minimap.width,
+			display->minimap.height);
+	if (!display->minimap.img)
+		return (false);
+	display->minimap.addr = mlx_get_data_addr(display->minimap.img,
+			&display->minimap.bits_per_pixel,
+			&display->minimap.line_length,
+			&display->minimap.endian);
+	if (!display->minimap.addr)
+		return (false);
+	return (true);
+}
+
+static bool	init_textures(t_display *display, t_data *data)
 {
 	int	i;
 
@@ -52,20 +70,8 @@ bool	init_display(t_display *display, t_data *data)
 			&display->frame.endian);
 	if (!display->frame.addr)
 		return (false);
-	display->minimap.height = ft_doublelen(data->map) * (TIDLE_SIZE + 1);
-	display->minimap.width = (ft_strlen(data->map[0]) - 1) * (TIDLE_SIZE + 1);
-	display->minimap.img = mlx_new_image(display->main,
-		display->minimap.width,
-		display->minimap.height);
-	if (!display->minimap.img)
-		return (false);
-	display->minimap.addr = mlx_get_data_addr(display->minimap.img,
-			&display->minimap.bits_per_pixel,
-			&display->minimap.line_length,
-			&display->minimap.endian);
-	if (!display->minimap.addr)
-		return (false);
-	if (!init_textures(display, data))
+	if (!init_minimap(display, data) || !init_textures(display, data)
+		|| !init_sprite(display))
 		return (false);
 	return (true);
 }
@@ -84,22 +90,10 @@ void	kill_display(t_display *display)
 		if (display->texture[i].img)
 			mlx_destroy_image(display->main, display->texture[i].img);
 	}
+	destroy_sprites(display);
 	if (display->window)
 		mlx_destroy_window(display->main, display->window);
 	if (display->main)
 		mlx_destroy_display(display->main);
 	free(display->main);
-}
-
-void	ft_kill(t_game *game, uint8_t status)
-{
-	delete_data(&game->data);
-	kill_display(&game->display);
-	exit (status);
-}
-
-int	close_game(t_game *game)
-{
-	ft_kill((t_game *)game, EXIT_SUCCESS);
-	return (EXIT_SUCCESS);
 }

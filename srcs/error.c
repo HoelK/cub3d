@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:58:39 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/11 22:10:41 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:54:54 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	write_error(uint8_t error)
 		write(2, "Invalid Format, Map must be .cub\n", 33);
 	else if (error == INVALID_PATH)
 		write(2, "File does not exist or Missing Permissions\n", 43);
+	else if (error == INVALID_RES)
+		write(2, "Supported resolutions : 1920x1080\n", 35); 
 }
 
 void	ft_exit(ssize_t	error)

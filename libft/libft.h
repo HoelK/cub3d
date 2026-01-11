@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:23:08 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/18 04:32:12 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 17:29:18 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	**ft_split(const char *str, const char *sep);
 char	*ft_itoa(int n);
 
 //Double strs
+size_t	ft_strmaxlen(char **strs);
 size_t	ft_doublelen(char **strs);
 char	**ft_doubledup(char **srcs);
 void	ft_double_free(char **strs);

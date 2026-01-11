@@ -1,5 +1,5 @@
 CC=cc
-FLAGS=-Werror -Wall -Wextra -O3
+FLAGS=-Werror -Wall -Wextra -g3
 SRCS=ft_isset.c \
 	 ft_isalpha.c \
 	 ft_isdigit.c \
@@ -34,6 +34,7 @@ SRCS=ft_isset.c \
 	 ft_write_error.c \
 	 ft_write_errorn.c \
 	 ft_doubledup.c \
+	 ft_strmaxlen.c \
 	 ft_doublelen.c \
 	 ft_double_free.c \
 	 ft_double_realloc.c \

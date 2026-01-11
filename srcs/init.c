@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:37:51 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 03:15:59 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:19:11 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static void	init_dir(t_game *game)
 {
+	int	i;
+
+	i = -1;
 	game->player.dir.y = 0;
 	game->player.dir.x = 0;
 	if (game->data.player_dir == 'N')
@@ -24,6 +27,8 @@ static void	init_dir(t_game *game)
 		game->player.dir.x++;
 	else if (game->data.player_dir == 'W')
 		game->player.dir.x--;
+	while (++i < KEY_AMOUNT)
+		game->keys[i] = false;
 }
 
 static void	init_angle(t_game *game)

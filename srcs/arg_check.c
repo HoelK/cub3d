@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 21:03:07 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/11 05:04:09 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:55:20 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	check_args(int ac, char **av)
 		ft_exit(TOO_LITT_ARGS);
 	if (ac > 2)
 		ft_exit(TOO_MANY_ARGS);
+	if (RES_X != 1920 || RES_Y != 1080)
+		ft_exit(INVALID_RES);
 	check_path(av[1]);
 }

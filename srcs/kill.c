@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   kill.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/10 18:47:35 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 16:32:00 by hkeromne         ###   ########.fr       */
+/*   Created: 2026/01/10 17:30:35 by hkeromne          #+#    #+#             */
+/*   Updated: 2026/01/10 17:30:36 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int ac, char **av)
+void	ft_kill(t_game *game, uint8_t status)
 {
-	t_game		game;
+	delete_data(&game->data);
+	kill_display(&game->display);
+	exit (status);
+}
 
-	check_args(ac, av);
-	game_init(av[1], &game);
-	hooks(&game);
+int	close_game(t_game *game)
+{
+	ft_kill((t_game *)game, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

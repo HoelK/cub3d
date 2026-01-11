@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 04:27:05 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 17:52:57 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	get_texture_id(t_ddata dda, t_game *game)
 	(void) game;
 	if (dda.side == true)
 	{
-		if (dda.stepY < 0)
+		if (dda.step_y < 0)
 			return (EAST);
 		return (WEST);
 	}
-	if (dda.stepX < 0)
+	if (dda.step_x < 0)
 		return (NORTH);
 	return (SOUTH);
 }
@@ -78,10 +78,12 @@ void	put_frame(t_game *game, t_ray ray)
 void	raycast(t_game *game)
 {
 	int		i;
-	float	offset;
 	t_ray	ray;
+	float	offset;
 
 	i = -1;
+	offset = 0;
+	ft_bzero(&ray, sizeof(t_ray));
 	while (++i < RES_X)
 	{
 		ray.id = i;
@@ -90,8 +92,7 @@ void	raycast(t_game *game)
 		ray.dir.y = game->player.dir.y + game->player.cplane.y * offset;
 		game->dda = dda(game->player.pos, game->data.map, &ray);
 		put_frame(game, ray);
-		// MINIMAP RAYS
 		draw_line(&game->display.minimap, normalize_tidle(game->player.pos),
-				normalize_tidle(game->dda.hit_pos), ORANGE);
+			normalize_tidle(game->dda.hit_pos), ORANGE);
 	}
 }

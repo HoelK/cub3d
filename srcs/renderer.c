@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:39:36 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 05:43:16 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:58:08 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,15 @@ int	render(t_game *game)
 	draw_ceil(&game->display.frame, rgb_to_hex(game->data.colors[CEIL]));
 	draw_floor(&game->display.frame, rgb_to_hex(game->data.colors[FLOOR]));
 	raycast(game);
-	map_to_frame(&game->display.frame, &game->display.minimap);
+	img_to_frame(&game->display.frame, &game->display.minimap,
+		game->display.minimap.height,
+		game->display.minimap.width, 0, 0);
+	img_to_frame(&game->display.frame,
+		&game->display.sprite.frames[game->display.sprite.current_frame],
+		game->display.sprite.frames[game->display.sprite.current_frame].height,
+		game->display.sprite.frames[game->display.sprite.current_frame].width,
+		RES_X - game->display.sprite.frames[game->display.sprite.current_frame].width,
+		RES_Y - game->display.sprite.frames[game->display.sprite.current_frame].height - 65);
 	frame_timer(game);
 	mlx_put_image_to_window(game->display.main, game->display.window,
 		game->display.frame.img, 0, 0);

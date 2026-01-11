@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmaxlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/10 18:47:35 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 16:32:00 by hkeromne         ###   ########.fr       */
+/*   Created: 2026/01/10 17:25:35 by hkeromne          #+#    #+#             */
+/*   Updated: 2026/01/10 17:30:03 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+size_t	ft_strmaxlen(char **strs)
 {
-	t_game		game;
+	size_t	i;
+	size_t	j;
+	size_t	max;
 
-	check_args(ac, av);
-	game_init(av[1], &game);
-	hooks(&game);
-	return (EXIT_SUCCESS);
+	i = 0;
+	j = 0;
+	max = 0;
+	while (strs[j])
+	{
+		while (strs[j][i])
+			i++;
+		if (i > max)
+			max = i;
+		i = 0;
+		j++;
+	}
+	return (max);
 }

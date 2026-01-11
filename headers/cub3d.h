@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 05:52:15 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:39:51 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,46 +23,50 @@
 # include "mlx.h"
 # include "../libft/libft.h"
 # include "../srcs/cub_interpreter/cub_interpreter.h"
-# define RES_X 1920
-# define RES_Y 1080
-# define NO_RESIZE false
-# define FOV 90
-# define PI 3.141592
-# define MOVE_SPEED 0.1
-# define ROTATE_SPEED 0.0872
+# define RES_X			1920
+# define RES_Y			1080
+# define NO_RESIZE		false
+# define FOV			90
+# define PI				3.141592
+# define MOVE_SPEED		0.1
+# define ROTATE_SPEED	0.0872
 
-# define WHITE 0xFFFFFF
-# define ORANGE 0xFFA500
-# define GREY 0x808080
+# define WHITE			0xFFFFFF
+# define ORANGE			0xFFA500
+# define GREY			0x808080
 
-# define TIDLE_SIZE 10
-# define PLAYER_SIZE 2
+# define TIDLE_SIZE		10
+# define PLAYER_SIZE	2
 
-# define KEY_AMOUNT	6
-# define KEY_ESC	65307
-# define KEY_LEFT	65361
-# define KEY_RIGHT	65363
-# define KEY_W		119
-# define KEY_A		97
-# define KEY_S		115
-# define KEY_D		100
+# define KEY_AMOUNT		7
+# define KEY_ESC		65307
+# define KEY_LEFT		65361
+# define KEY_RIGHT		65363
+# define KEY_W			119
+# define KEY_A			97
+# define KEY_S			115
+# define KEY_D			100
+# define MCLICK_L		1
 
-# define KPRESS		2
-# define KREL		3
-# define BPRESS		4
-# define MOTION		6
-# define DESTROY	17
+# define KPRESS			2
+# define KREL			3
+# define BPRESS			4
+# define MOTION			6
+# define DESTROY		17
 
-# define KPRESSMASK	(1L<<0)
-# define KRELMASK	(1L<<1)
-# define BPRESSMASK	(1L<<2)
-# define PMOTIONMASK (1L<<6)
+# define KPRESSMASK		1
+# define KRELMASK		2
+# define BPRESSMASK		4
+# define PMOTIONMASK	64
 
-typedef struct	s_point
+# define FRAME_AMOUNT	10
+# define SPRITE_PATH	"./sprites/"
+
+typedef struct s_point
 {
 	double	x;
 	double	y;
-} t_point;
+}	t_point;
 
 typedef struct s_player
 {
@@ -72,7 +76,7 @@ typedef struct s_player
 	float	angle;
 }	t_player;
 
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*img;
 	char	*addr;
@@ -83,14 +87,21 @@ typedef struct	s_img
 	int		bits_per_pixel;
 }	t_img;
 
+typedef struct s_sprite
+{
+	int		current_frame;
+	t_img	frames[FRAME_AMOUNT];
+}	t_sprite;
+
+
 typedef struct s_tex
 {
-	int     id;
-	int     x;
-	int     y;
-	int     color;
-	double  step;
-	double  pos;
+	int		id;
+	int		x;
+	int		y;
+	int		color;
+	double	step;
+	double	pos;
 }	t_tex;
 
 typedef struct s_display
@@ -100,15 +111,16 @@ typedef struct s_display
 	t_img	frame;
 	t_img	minimap;
 	t_img	texture[4];
+	t_sprite	sprite;
 }	t_display;
 
 typedef struct s_ddata
 {
 	bool	side;
-	int		mapX;
-	int		mapY;
-	int		stepX;
-	int		stepY;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
 	t_point	delta;
 	t_point	hit_pos;
 	t_point	side_dist;
@@ -140,7 +152,8 @@ enum e_arg_errors
 	TOO_MANY_ARGS,
 	TOO_LITT_ARGS,
 	INVALID_PATH,
-	INVALID_FORMAT
+	INVALID_FORMAT,
+	INVALID_RES
 };
 
 enum e_key_ids
@@ -150,7 +163,8 @@ enum e_key_ids
 	KS_ID,
 	KD_ID,
 	KLEFT_ID,
-	KRIGHT_ID
+	KRIGHT_ID,
+	MCLICKL_ID
 };
 
 //Arg check
@@ -186,7 +200,7 @@ void		raycast(t_game *game);
 t_point		normalize_tidle(t_point px);
 t_point		normalize_player(t_point px);
 void		draw_map(t_display *display, char **map, t_point player);
-void		map_to_frame(t_img *frame, t_img *minimap);
+void		img_to_frame(t_img *frame, t_img *img, int height, int width, int place_x, int place_y);
 
 //Display management
 bool		init_display(t_display *display, t_data *data);
@@ -200,14 +214,14 @@ int			render(t_game *game);
 int			handle_input(t_game *game);
 
 //Movements
-void	move_left(t_game *game);
-void	move_right(t_game *game);
-void	move_forward(t_game *game);
-void	move_backward(t_game *game);
+void		move_left(t_game *game);
+void		move_right(t_game *game);
+void		move_forward(t_game *game);
+void		move_backward(t_game *game);
 
 //Mouse
-void	turn_right(t_game *game, int diff, bool mouse);
-void	turn_left(t_game *game, int diff, bool mouse);
+void		turn_right(t_game *game, int diff, bool mouse);
+void		turn_left(t_game *game, int diff, bool mouse);
 
 //Init
 void		game_init(char *file, t_game *game);
@@ -219,5 +233,10 @@ uint32_t	get_time(void);
 //Utils
 int			rgb_to_hex(uint8_t *rgb);
 float		angle_to_radian(int angle);
+
+//Sprites
+void		update_frame(t_game *game);
+bool		init_sprite(t_display *display);
+void		destroy_sprites(t_display *display);
 
 #endif

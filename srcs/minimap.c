@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:40:56 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 05:46:57 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 20:24:10 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	draw_map(t_display *display, char **map, t_point player)
 			color = WHITE;
 			if (map[y][x] == '1')
 				color = GREY;
-			draw_square(&display->minimap, normalize_tidle(get_point(x, y)),
+			if (map[y][x] != ' ')
+				draw_square(&display->minimap, normalize_tidle(get_point(x, y)),
 					TIDLE_SIZE, color);
 			if (x == player.x && y == player.y)
 				draw_square(&display->minimap, normalize_tidle(get_point(x, y)),
@@ -53,21 +54,22 @@ void	draw_map(t_display *display, char **map, t_point player)
 	}
 }
 
-void	map_to_frame(t_img *frame, t_img *minimap)
+void	img_to_frame(t_img *frame, t_img *img, int height, int width, int place_x, int place_y)
 {
 	int	x;
 	int	y;
-	int color;
+	int	color;
 
 	y = 0;
 	x = 0;
-	while (y < minimap->height)
+	while (y < height)
 	{
-		while (x < minimap->width)
+		while (x < width)
 		{
-			color = *(int *)(minimap->addr + (y * minimap->line_length + x * (minimap->bits_per_pixel / 8)));
-			if (color != 0)
-				my_mlx_pixel_put(frame, get_point(x, y), color);
+			color = *(int *)(img->addr + (y * img->line_length
+						+ x * (img->bits_per_pixel / 8)));
+			if ((color & 0xFF000000) == 0 && color != 0)
+				my_mlx_pixel_put(frame, get_point(x + place_x, y + place_y), color);
 			x++;
 		}
 		x = 0;

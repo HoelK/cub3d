@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 05:36:42 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 04:58:30 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/10 19:39:49 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ bool	check_map_line(char *line, size_t line_n)
 
 bool	flood_fill(char **map, int x, int y, bool *closed)
 {
-	if (x < 0 || y < 0 || !map[y] || !map[y][x]
+	if (x < 0 || y < 0
+		|| !map[y]
+		|| y > (int)ft_doublelen(map)
+		|| x > (int)ft_strlen(map[y])
+		|| !map[y][x]
 		|| map[y][x] == '\n' || map[y][x] == ' ')
 	{
 		if (*closed)
