@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:47:45 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 16:39:51 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 02:24:10 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@
 # define WHITE			0xFFFFFF
 # define ORANGE			0xFFA500
 # define GREY			0x808080
+# define RED			0xFF0000
+# define BLUE			0x0000FF
 
 # define TIDLE_SIZE		10
 # define PLAYER_SIZE	2
 
-# define KEY_AMOUNT		7
+# define KEY_AMOUNT		8
 # define KEY_ESC		65307
 # define KEY_LEFT		65361
 # define KEY_RIGHT		65363
@@ -46,6 +48,7 @@
 # define KEY_A			97
 # define KEY_S			115
 # define KEY_D			100
+# define KEY_F			102
 # define MCLICK_L		1
 
 # define KPRESS			2
@@ -59,8 +62,10 @@
 # define BPRESSMASK		4
 # define PMOTIONMASK	64
 
-# define FRAME_AMOUNT	10
-# define SPRITE_PATH	"./sprites/"
+# define GUN_FRAME_AMOUNT	10
+# define EXP_FRAME_AMOUNT	63
+# define SPRITE_GUN_PATH	"./sprites/gun/"
+# define SPRITE_EXP_PATH	"./sprites/explosion/"
 
 typedef struct s_point
 {
@@ -89,16 +94,16 @@ typedef struct s_img
 
 typedef struct s_sprite
 {
+	int		frame_amount;
 	int		current_frame;
-	t_img	frames[FRAME_AMOUNT];
+	t_img	*frames;
 }	t_sprite;
-
 
 typedef struct s_tex
 {
-	int		id;
 	int		x;
 	int		y;
+	t_img	img;
 	int		color;
 	double	step;
 	double	pos;
@@ -106,12 +111,13 @@ typedef struct s_tex
 
 typedef struct s_display
 {
-	void	*main;
-	void	*window;
-	t_img	frame;
-	t_img	minimap;
-	t_img	texture[4];
-	t_sprite	sprite;
+	void		*main;
+	void		*window;
+	t_img		frame;
+	t_img		minimap;
+	t_img		texture[TEXTURE_AMOUNT];
+	t_sprite	gun;
+	t_sprite	explosion;
 }	t_display;
 
 typedef struct s_ddata
@@ -141,9 +147,11 @@ typedef struct s_game
 {
 	uint32_t	time;
 	t_ddata		dda;
+	t_ddata		ddoor;
 	t_data		data;
 	t_player	player;
 	t_display	display;
+	bool		mouse;
 	bool		keys[KEY_AMOUNT];
 }	t_game;
 
@@ -162,6 +170,7 @@ enum e_key_ids
 	KA_ID,
 	KS_ID,
 	KD_ID,
+	KF_ID,
 	KLEFT_ID,
 	KRIGHT_ID,
 	MCLICKL_ID
@@ -196,12 +205,6 @@ float		get_walldist(t_ddata *dda, t_point player, t_point dir);
 //Raycast
 void		raycast(t_game *game);
 
-//Minimap
-t_point		normalize_tidle(t_point px);
-t_point		normalize_player(t_point px);
-void		draw_map(t_display *display, char **map, t_point player);
-void		img_to_frame(t_img *frame, t_img *img, int height, int width, int place_x, int place_y);
-
 //Display management
 bool		init_display(t_display *display, t_data *data);
 void		kill_display(t_display *display);
@@ -220,6 +223,7 @@ void		move_forward(t_game *game);
 void		move_backward(t_game *game);
 
 //Mouse
+int			mouse_move(int x, int y, t_game *game);
 void		turn_right(t_game *game, int diff, bool mouse);
 void		turn_left(t_game *game, int diff, bool mouse);
 
@@ -233,10 +237,24 @@ uint32_t	get_time(void);
 //Utils
 int			rgb_to_hex(uint8_t *rgb);
 float		angle_to_radian(int angle);
+bool		is_wall(char **map, int x, int y);
+
+//Minimap
+t_point		normalize_tidle(t_point px);
+t_point		normalize_player(t_point px);
+void		draw_map(t_display *display, char **map, t_point player);
+void		img_to_frame(t_img *frame, t_img *img, t_point	h_and_w,
+				t_point place);
 
 //Sprites
-void		update_frame(t_game *game);
-bool		init_sprite(t_display *display);
-void		destroy_sprites(t_display *display);
+void		update_frame(t_game *game, t_sprite *sprite);
+bool		init_sprite(t_display *display, t_sprite *sprite, const char *s_path, int frame_amount);
+void		destroy_sprite(t_display *display, t_sprite *sprite);
+
+//Doors
+void		update_door(t_game *game);
+
+//Crosshair
+void	render_crossair(t_game *game);
 
 #endif

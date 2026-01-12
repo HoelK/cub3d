@@ -6,63 +6,77 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 19:39:34 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 16:38:04 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 02:20:57 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	update_frame(t_game *game)
+void	update_frame(t_game *game, t_sprite *sprite)
 {
-	game->display.sprite.current_frame++;
-	if (game->display.sprite.current_frame == FRAME_AMOUNT)
+	sprite->current_frame++;
+	if (sprite->current_frame == sprite->frame_amount)
 	{
-		game->display.sprite.current_frame = 0;
+		sprite->current_frame = 0;
 		game->keys[MCLICKL_ID] = false;
 	}
+	if (game->data.map[game->ddoor.map_y][game->ddoor.map_x] == 'D' && sprite->current_frame == 4)
+		game->data.map[game->ddoor.map_y][game->ddoor.map_x] = 'x';
 }
 
-void	destroy_sprites(t_display *display)
+void	destroy_sprite(t_display *display, t_sprite *sprite)
 {
 	int	i;
 
 	i = 0;
-	while (i < FRAME_AMOUNT)
+	while (i < sprite->frame_amount)
 	{
-		if (display->sprite.frames[i].img)
-			mlx_destroy_image(display->main, display->sprite.frames[i].img);
+		if (sprite->frames[i].img)
+			mlx_destroy_image(display->main, sprite->frames[i].img);
 		i++;
 	}
+	if (sprite->frames)
+		free(sprite->frames);
 }
 
-bool	init_sprite(t_display *display)
+static char	*get_path(int i, const char *s_path)
 {
-	int		i;
 	char	*num;
 	char	*path;
 	char	*f_path;
 
+	num = ft_itoa(i);
+	path = ft_strjoin(s_path, num);
+	f_path = ft_strjoin(path, ".xpm");
+	free(path);
+	free(num);
+	return (f_path);
+}
+
+bool	init_sprite(t_display *display, t_sprite *sprite, const char *s_path, int frame_amount)
+{
+	int		i;
+	char	*path;
+
 	i = -1;
-	ft_bzero(&display->sprite, sizeof(t_sprite));
-	while (++i < FRAME_AMOUNT)
+	ft_bzero(sprite, sizeof(t_sprite));
+	sprite->frame_amount = frame_amount;
+	sprite->frames = malloc(sizeof(t_img) * frame_amount);
+	while (++i < frame_amount)
 	{
-		num = ft_itoa(i);
-		path = ft_strjoin(SPRITE_PATH, num);
-		f_path = ft_strjoin(path, ".xpm");
+		path = get_path(i, s_path);
+		sprite->frames[i].img = mlx_xpm_file_to_image(display->main, path,
+				&sprite->frames[i].width,
+				&sprite->frames[i].height);
+		if (!sprite->frames[i].img)
+			return (false);
+		sprite->frames[i].addr = mlx_get_data_addr(sprite->frames[i].img,
+				&sprite->frames[i].bits_per_pixel,
+				&sprite->frames[i].line_length,
+				&sprite->frames[i].endian);
+		if (!sprite->frames[i].addr)
+			return (false);
 		free(path);
-		free(num);
-		fprintf(stderr, "%s\n", f_path);
-		display->sprite.frames[i].img = mlx_xpm_file_to_image(display->main,
-				f_path, &display->sprite.frames[i].width, &display->sprite.frames[i].height);
-		if (!display->sprite.frames[i].img)
-			return (false);
-		display->sprite.frames[i].addr = mlx_get_data_addr(display->sprite.frames[i].img,
-				&display->sprite.frames[i].bits_per_pixel,
-				&display->sprite.frames[i].line_length,
-				&display->sprite.frames[i].endian);
-		if (!display->sprite.frames[i].addr)
-			return (false);
-		free(f_path);
 	}
 	return (true);
 }

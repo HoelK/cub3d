@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:53:20 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 16:38:22 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 02:06:12 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	handle_input(t_game *game)
 	if (game->keys[KA_ID])
 		move_left(game);
 	if (game->keys[MCLICKL_ID])
-		update_frame(game);
+		update_frame(game, &game->display.gun);
+	if (game->keys[KF_ID])
+		update_door(game);
 	return (0);
 }
 
@@ -47,6 +49,8 @@ int	key_press(int keypress, t_game *game)
 		game->keys[KA_ID] = true;
 	else if (keypress == KEY_D)
 		game->keys[KD_ID] = true;
+	else if (keypress == KEY_F)
+		game->keys[KF_ID] = true;
 	return (0);
 }
 
@@ -67,19 +71,6 @@ int	key_release(int keypress, t_game *game)
 	return (0);
 }
 
-int	mouse_move(int x, int y, t_game *game)
-{
-	static int	s_x;
-
-	(void) y;
-	if (s_x < x)
-		turn_right(game, x - s_x, true);
-	else if (s_x > x)
-		turn_left(game, s_x - x, true);
-	s_x = x;
-	return (1);
-}
-
 int	mouse_click(int keypress, int x, int y, t_game *game)
 {
 	(void) x;
@@ -96,6 +87,7 @@ void	hooks(t_game *game)
 	mlx_hook(game->display.window, DESTROY, BPRESSMASK, close_game, game);
 	mlx_mouse_hook(game->display.window, mouse_click, game);
 	mlx_hook(game->display.window, MOTION, PMOTIONMASK, mouse_move, game);
+	mlx_mouse_move(game->display.main, game->display.window, RES_X / 2, RES_Y / 2);
 	mlx_loop_hook(game->display.main, render, game);
 	mlx_loop(game->display.main);
 }

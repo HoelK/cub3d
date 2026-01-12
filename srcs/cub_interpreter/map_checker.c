@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 05:36:42 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 19:39:49 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 18:14:51 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,29 @@ bool	check_map_line(char *line, size_t line_n)
 	return (ret);
 }
 
-bool	flood_fill(char **map, int x, int y, bool *closed)
+bool	flood_fill(t_data *data, int x, int y, bool *closed)
 {
 	if (x < 0 || y < 0
-		|| !map[y]
-		|| y > (int)ft_doublelen(map)
-		|| x > (int)ft_strlen(map[y])
-		|| !map[y][x]
-		|| map[y][x] == '\n' || map[y][x] == ' ')
+		|| !data->map[y]
+		|| y > (int)ft_doublelen(data->map)
+		|| x > (int)ft_strlen(data->map[y])
+		|| !data->map[y][x]
+		|| data->map[y][x] == '\n' || data->map[y][x] == ' ')
 	{
 		if (*closed)
 			parse_error(INVALID, MAP, y + 1);
 		*closed = false;
 		return (closed);
 	}
-	else if (map[y][x] == '1' || map[y][x] == 'x')
+	else if (data->map[y][x] == '1' || data->map[y][x] == 'x')
 		return (true);
-	map[y][x] = 'x';
-	flood_fill(map, x + 1, y, closed);
-	flood_fill(map, x - 1, y, closed);
-	flood_fill(map, x, y + 1, closed);
-	flood_fill(map, x, y - 1, closed);
+	if (data->map[y][x] == 'D')
+		add_door(data, x, y);
+	data->map[y][x] = 'x';
+	flood_fill(data, x + 1, y, closed);
+	flood_fill(data, x - 1, y, closed);
+	flood_fill(data, x, y + 1, closed);
+	flood_fill(data, x, y - 1, closed);
 	return (*closed);
 }
 

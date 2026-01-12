@@ -6,11 +6,24 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 02:47:41 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 05:56:13 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:53:45 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	mouse_move(int x, int y, t_game *game)
+{
+	static int	s_x;
+
+	(void) y;
+	if (s_x < x)
+		turn_right(game, x - s_x, true);
+	else if (s_x > x)
+		turn_left(game, s_x - x, true);
+	s_x = x;
+	return (1);
+}
 
 void	turn_left(t_game *game, int diff, bool mouse)
 {

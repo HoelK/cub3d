@@ -6,11 +6,16 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 02:40:38 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 02:40:38 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:14:56 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+bool	is_wall(char **map, int x, int y)
+{
+	return (map[y][x] == '1' || is_door(map, x, y));
+}
 
 int	rgb_to_hex(uint8_t *rgb)
 {

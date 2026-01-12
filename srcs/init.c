@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:37:51 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 16:19:11 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 22:23:41 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,17 @@ static void	player_init(t_game *game, t_point data)
 	game->time = get_time();
 	game->player.pos.x = data.x + 0.5;
 	game->player.pos.y = data.y + 0.5;
+	game->player.cplane.y = game->player.dir.x;
+	game->player.cplane.x = -game->player.dir.y;
+	game->mouse = true;
 }
 
 void	game_init(char *file, t_game *game)
 {
 	ft_bzero(game, sizeof(t_game));
-	if (!dump(file, &game->data) || !init_display(&game->display, &game->data))
+	if (!dump(file, &game->data))
+		ft_kill(game, EXIT_FAILURE);
+	if (!init_display(&game->display, &game->data))
 		ft_kill(game, EXIT_FAILURE);
 	player_init(game, get_point(game->data.player_x, game->data.player_y));
 }

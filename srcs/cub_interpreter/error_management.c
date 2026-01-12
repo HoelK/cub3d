@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 01:42:16 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/19 01:16:24 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:30:13 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	duplicate_error(size_t line, uint8_t duplicate)
 		ft_write_errorn("Color : floor");
 	else if (duplicate == C)
 		ft_write_errorn("Color : ceiling");
+	else if (duplicate == D)
+		ft_write_errorn("Texture : Door");
 	else if (duplicate == PLAYER)
 		ft_write_errorn("Player");
 }
@@ -74,6 +76,8 @@ void	missing_error(uint8_t missing)
 		ft_write_errorn("Color : floor");
 	else if (missing == C)
 		ft_write_errorn("Color : ceiling");
+	else if (missing == D)
+		ft_write_errorn("Texture : Door");
 	else if (missing == MAP)
 		ft_write_errorn("Element : Map");
 	else if (missing == PLAYER)

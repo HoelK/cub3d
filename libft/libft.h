@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 21:23:08 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 17:29:18 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 18:02:03 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ bool	ft_isset(char c, const char *set);
 
 //Memory
 void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_realloc(void *old, size_t old_size, size_t new_size);
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);

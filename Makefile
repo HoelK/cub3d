@@ -1,5 +1,5 @@
 CC=cc
-FLAGS=-Wall -Wextra -Werror -O3
+FLAGS=-Wall -Wextra -Werror -g3
 SRCS=srcs/main.c \
 	 srcs/dda.c \
 	 srcs/init.c \
@@ -13,12 +13,14 @@ SRCS=srcs/main.c \
 	 srcs/sprite.c \
 	 srcs/minimap.c \
 	 srcs/renderer.c \
+	 srcs/crosshair.c \
 	 srcs/movements.c \
 	 srcs/arg_check.c \
 	 srcs/key_events.c \
 	 srcs/dda_getters.c \
 	 srcs/display_management.c \
 	 srcs/cub_interpreter/data.c \
+	 srcs/cub_interpreter/doors.c \
 	 srcs/cub_interpreter/dumper.c \
 	 srcs/cub_interpreter/color_handle.c \
 	 srcs/cub_interpreter/id_handle.c \

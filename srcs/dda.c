@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 04:07:22 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 18:17:45 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:59:26 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_ddata	dda(t_point player, char **map, t_ray *ray)
 
 	ft_bzero(&dda, sizeof(dda));
 	init_dda(&dda, player, ray->dir);
-	while (map[dda.map_y][dda.map_x] != '1')
+	while (map[dda.map_y][dda.map_x] != '1' && map[dda.map_y][dda.map_x] != 'D')
 	{
 		if (dda.side_dist.x < dda.side_dist.y)
 			update_dda(&dda, 'X');

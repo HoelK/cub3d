@@ -6,15 +6,23 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 17:52:57 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 02:24:20 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+bool	hit_door(t_game *game, t_ddata dda)
+{
+	if (is_door(game->data.map, dda.map_x, dda.map_y))
+		return (true);
+	return (false);
+}
+
 int	get_texture_id(t_ddata dda, t_game *game)
 {
-	(void) game;
+	if (hit_door(game, dda))
+		return (DOOR);
 	if (dda.side == true)
 	{
 		if (dda.step_y < 0)
@@ -75,6 +83,19 @@ void	put_frame(t_game *game, t_ray ray)
 	vertical_draw(game, ray);
 }
 
+void	door_cast(t_game *game)
+{
+	t_ray	ray;
+	double	offset;
+
+	offset = (float)(((2.0 * (RES_X / 2)) / RES_X) - 1);
+	ray.dir.x = game->player.dir.x + game->player.cplane.x * offset;
+	ray.dir.y = game->player.dir.y + game->player.cplane.y * offset;
+	game->ddoor = dda(game->player.pos, game->data.map, &ray);
+	draw_line(&game->display.minimap, normalize_tidle(game->player.pos),
+		normalize_tidle(game->ddoor.hit_pos), RED);
+}
+
 void	raycast(t_game *game)
 {
 	int		i;
@@ -95,4 +116,5 @@ void	raycast(t_game *game)
 		draw_line(&game->display.minimap, normalize_tidle(game->player.pos),
 			normalize_tidle(game->dda.hit_pos), ORANGE);
 	}
+	door_cast(game);
 }

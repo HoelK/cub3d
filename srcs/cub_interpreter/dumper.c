@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 05:52:27 by hkeromne          #+#    #+#             */
-/*   Updated: 2025/12/19 03:54:58 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 21:21:07 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static bool	check_tokens(char *line, size_t line_n, t_data *data)
 		return (true);
 	id = check_id(token, line_n, false);
 	token = ft_strtok(NULL, SPACE_CHARS);
-	if (id < 4)
+	if (id < TEXTURE_AMOUNT)
 		ret = check_link(token, line_n, data, id);
 	else
-		ret = check_color(token, line_n, data, id - 4);
+		ret = check_color(token, line_n, data, id - TEXTURE_AMOUNT);
 	if (!check_syntax(line_n))
 		ret = false;
 	return (ret);
@@ -69,10 +69,12 @@ int	dump(char *file_path, t_data *data)
 		free(line);
 		line = get_next_line(fd);
 	}
-	check_id(NULL, 0, CHECK_MISSING);
+	if (!check_id(NULL, 0, CHECK_MISSING))
+		return (false);
 	if (!line)
 		return (parse_error(MISSING, MAP, line_n), delete_data(data), false);
 	if (!check_map(fd, line, line_n, data))
 		return (false);
+	replace_doors(data);
 	return (ret);
 }

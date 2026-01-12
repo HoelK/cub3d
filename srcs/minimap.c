@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:40:56 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 20:24:10 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:15:42 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	draw_map(t_display *display, char **map, t_point player)
 			color = WHITE;
 			if (map[y][x] == '1')
 				color = GREY;
+			else if (map[y][x] == 'D' || map[y][x] == 'd')
+				color = BLUE;
 			if (map[y][x] != ' ')
 				draw_square(&display->minimap, normalize_tidle(get_point(x, y)),
 					TIDLE_SIZE, color);
@@ -54,7 +56,7 @@ void	draw_map(t_display *display, char **map, t_point player)
 	}
 }
 
-void	img_to_frame(t_img *frame, t_img *img, int height, int width, int place_x, int place_y)
+void	img_to_frame(t_img *frame, t_img *img, t_point	h_and_w, t_point place)
 {
 	int	x;
 	int	y;
@@ -62,14 +64,15 @@ void	img_to_frame(t_img *frame, t_img *img, int height, int width, int place_x, 
 
 	y = 0;
 	x = 0;
-	while (y < height)
+	while (y < h_and_w.y)
 	{
-		while (x < width)
+		while (x < h_and_w.x)
 		{
 			color = *(int *)(img->addr + (y * img->line_length
 						+ x * (img->bits_per_pixel / 8)));
 			if ((color & 0xFF000000) == 0 && color != 0)
-				my_mlx_pixel_put(frame, get_point(x + place_x, y + place_y), color);
+				my_mlx_pixel_put(frame,
+					get_point(x + (int)place.x, y + (int)place.y), color);
 			x++;
 		}
 		x = 0;

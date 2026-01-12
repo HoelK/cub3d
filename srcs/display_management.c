@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:42:57 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 19:39:16 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 02:17:20 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	init_textures(t_display *display, t_data *data)
 	int	i;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < TEXTURE_AMOUNT)
 	{
 		display->texture[i].img = mlx_xpm_file_to_image(display->main,
 				data->texture_path[i],
@@ -71,7 +71,8 @@ bool	init_display(t_display *display, t_data *data)
 	if (!display->frame.addr)
 		return (false);
 	if (!init_minimap(display, data) || !init_textures(display, data)
-		|| !init_sprite(display))
+		|| !init_sprite(display, &display->gun, SPRITE_GUN_PATH, GUN_FRAME_AMOUNT)
+		|| !init_sprite(display, &display->explosion, SPRITE_EXP_PATH, EXP_FRAME_AMOUNT))
 		return (false);
 	return (true);
 }
@@ -81,16 +82,17 @@ void	kill_display(t_display *display)
 	int	i;
 
 	i = -1;
+	destroy_sprite(display, &display->gun);
+	destroy_sprite(display, &display->explosion);
 	if (display->frame.img)
 		mlx_destroy_image(display->main, display->frame.img);
 	if (display->minimap.img)
 		mlx_destroy_image(display->main, display->minimap.img);
-	while (++i < 4)
+	while (++i < TEXTURE_AMOUNT)
 	{
 		if (display->texture[i].img)
 			mlx_destroy_image(display->main, display->texture[i].img);
 	}
-	destroy_sprites(display);
 	if (display->window)
 		mlx_destroy_window(display->main, display->window);
 	if (display->main)

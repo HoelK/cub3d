@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 01:20:29 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/10 03:14:15 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/11 18:10:39 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	check_map(int fd, char *line, size_t line_n, t_data *data)
 		line = get_next_line(fd);
 	}
 	if (!ret || !find_player(data)
-		|| !flood_fill(data->map, data->player_x, data->player_y, &valid))
+		|| !flood_fill(data, data->player_x, data->player_y, &valid))
 		return (delete_data(data), false);
 	return (true);
 }
