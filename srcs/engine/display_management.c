@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:42:57 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:13:56 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 21:19:45 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 static bool	init_minimap(t_display *display, t_data *data)
 {
-	display->minimap.height = ft_doublelen(data->map) * (TIDLE_SIZE + 1);
-	display->minimap.width = (ft_strmaxlen(data->map) - 1) * (TIDLE_SIZE + 1);
+	display->map_tidle_size = MINIMAP_SIZE / ft_strmaxlen(data->map);
+	display->minimap.height = ft_doublelen(data->map)
+		* (display->map_tidle_size + 2);
+	display->minimap.width = (ft_strmaxlen(data->map) - 1)
+		* (display->map_tidle_size + 2);
 	display->minimap.img = mlx_new_image(display->main,
 			display->minimap.width,
 			display->minimap.height);

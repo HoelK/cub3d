@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:10:35 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:48:32 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 21:25:26 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	vertical_draw(t_game *game, t_ray ray)
 	tex.img = get_texture(game->dda, game);
 	tex.coo.x = (int)(game->dda.wall_x
 			* (double)(tex.img->width));
-	if (!game->dda.side && ray.dir.x > 0)
+	if (!game->dda.side && ray.dir.x < 0)
 		tex.coo.x = tex.img->width - tex.coo.x - 1;
-	if (game->dda.side && ray.dir.y < 0)
+	if (game->dda.side && ray.dir.y > 0)
 		tex.coo.x = tex.img->width - tex.coo.x - 1;
 	tex.step = (double)tex.img->height
 		/ (double)ray.line_len;

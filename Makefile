@@ -7,6 +7,7 @@ SRCS=srcs/core/main.c \
 	 srcs/others/kill.c \
 	 srcs/others/error.c \
 	 srcs/others/utils.c \
+	 srcs/ui/ui.c \
 	 srcs/ui/minimap.c \
 	 srcs/ui/crosshair.c \
 	 srcs/io/mouse.c \

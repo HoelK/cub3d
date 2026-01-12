@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 16:04:32 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:59:20 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 21:01:43 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_display
 	void		*window;
 	t_img		frame;
 	t_img		minimap;
+	int			map_tidle_size;
 	t_img		texture[TEXTURE_AMOUNT];
 	t_sprite	gun;
 }	t_display;

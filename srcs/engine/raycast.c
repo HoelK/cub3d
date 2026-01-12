@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:48:53 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 21:20:15 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	raycast(t_game *game)
 	i = -1;
 	offset = 0;
 	ft_bzero(&ray, sizeof(t_ray));
+	draw_ceil(&game->display.frame, rgb_to_hex(game->data.colors[CEIL]));
+	draw_floor(&game->display.frame, rgb_to_hex(game->data.colors[FLOOR]));
 	while (++i < RES_X)
 	{
 		ray.id = i;
@@ -51,8 +53,10 @@ void	raycast(t_game *game)
 		ray.dir.y = game->player.dir.y + game->player.cplane.y * offset;
 		game->dda = dda(game->player.pos, game->data.map, &ray);
 		put_frame(game, ray);
-		draw_line(&game->display.minimap, normalize_tidle(game->player.pos),
-			normalize_tidle(game->dda.hit_pos), ORANGE);
+		draw_line(&game->display.minimap, normalize_tidle(game->player.pos,
+				game->display.map_tidle_size),
+			normalize_tidle(game->dda.hit_pos, game->display.map_tidle_size),
+			ORANGE);
 	}
 	door_cast(game);
 }

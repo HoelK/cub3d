@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:09:28 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:18:48 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 21:11:45 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,4 @@ void	door_cast(t_game *game)
 	ray.dir.x = game->player.dir.x + game->player.cplane.x * offset;
 	ray.dir.y = game->player.dir.y + game->player.cplane.y * offset;
 	game->ddoor = dda(game->player.pos, game->data.map, &ray);
-	draw_line(&game->display.minimap, normalize_tidle(game->player.pos),
-		normalize_tidle(game->ddoor.hit_pos), RED);
 }

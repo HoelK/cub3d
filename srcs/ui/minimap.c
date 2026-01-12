@@ -6,23 +6,23 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:40:56 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:57:13 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 21:20:50 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ui.h"
 
-t_point	normalize_tidle(t_point px)
+t_point	normalize_tidle(t_point px, int tidle_size)
 {
-	px.x = px.x * (TIDLE_SIZE + 1);
-	px.y = px.y * (TIDLE_SIZE + 1);
+	px.x = px.x * (tidle_size + 2);
+	px.y = px.y * (tidle_size + 2);
 	return (px);
 }
 
-t_point	normalize_player(t_point px)
+t_point	normalize_player(t_point px, int tidle_size)
 {
-	px.x = (px.x * (TIDLE_SIZE + 1)) + (TIDLE_SIZE / 2) - (PLAYER_SIZE / 2);
-	px.y = (px.y * (TIDLE_SIZE + 1)) + (TIDLE_SIZE / 2) - (PLAYER_SIZE / 2);
+	px.x = (px.x * (tidle_size + 2)) + (tidle_size / 2);
+	px.y = (px.y * (tidle_size + 2)) + (tidle_size / 2);
 	return (px);
 }
 
@@ -38,7 +38,7 @@ static int	get_map_color(char **map, t_ipoint coo)
 	return (color);
 }
 
-void	draw_map(t_display *display, char **map, t_point player)
+void	draw_map(t_display *display, char **map)
 {
 	t_ipoint	coo;
 
@@ -50,12 +50,9 @@ void	draw_map(t_display *display, char **map, t_point player)
 		{
 			if (map[coo.y][coo.x] != ' ')
 				draw_square(&display->minimap,
-					normalize_tidle(get_point(coo.x, coo.y)),
-					TIDLE_SIZE, get_map_color(map, coo));
-			if (coo.x == player.x && coo.y == player.y)
-				draw_square(&display->minimap,
-					normalize_tidle(get_point(coo.x, coo.y)),
-					PLAYER_SIZE, ORANGE);
+					normalize_tidle(get_point(coo.x, coo.y),
+						display->map_tidle_size),
+					display->map_tidle_size + 1, get_map_color(map, coo));
 			coo.x++;
 		}
 		coo.x = 0;
