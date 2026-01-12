@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 02:01:07 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 20:28:00 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:10:35 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ enum e_err_obj
 	SO,
 	WE,
 	EA,
+	D,
 	F,
 	C,
-	D,
 	MAP,
 	PLAYER,
 	TEXTURE,

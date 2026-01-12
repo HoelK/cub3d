@@ -81,9 +81,11 @@ $(NAME): $(OBJS) $(HEADER)
 	@$(CC) $(FLAGS) $^ -c -o $@
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "\e[1;31m [DELETING LIBRARY]"
+	@rm -f $(NAME)
 
 clean:
-	rm -f $(OBJS)
+	@echo "\e[1;31m [DELETING RESIDUAL FILES]"
+	@rm -f $(OBJS)
 
 re: clean all

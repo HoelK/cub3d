@@ -6,13 +6,13 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 05:52:27 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 21:21:07 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 19:45:30 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "handlers.h"
 
-bool	map_detected(const char *line)
+static bool	map_detected(const char *line)
 {
 	if (!line || !*line || *line == '\n')
 		return (false);
@@ -69,12 +69,8 @@ int	dump(char *file_path, t_data *data)
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (!check_id(NULL, 0, CHECK_MISSING))
+	if (!check_id(NULL, 0, CHECK_MISSING)
+		|| !check_map(fd, line, line_n, data))
 		return (false);
-	if (!line)
-		return (parse_error(MISSING, MAP, line_n), delete_data(data), false);
-	if (!check_map(fd, line, line_n, data))
-		return (false);
-	replace_doors(data);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 02:01:22 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 19:07:01 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 18:07:13 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "errors.h"
-# include "../libft/libft.h"
+# include "libft.h"
 # include "cub_interpreter.h"
 # define MAP_BUFFER			10
 # define MAP_SET			" 01NSEWD"

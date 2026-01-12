@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 01:20:29 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 18:10:39 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 19:44:58 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ bool	check_map(int fd, char *line, size_t line_n, t_data *data)
 
 	ret = true;
 	valid = true;
-	if (!alloc_map(data))
-		return (false);
+	if (!line || !alloc_map(data))
+		return (parse_error(MISSING, MAP, line_n), delete_data(data), false);
 	while (line)
 	{
 		if (!check_map_line(line, line_n++))
@@ -67,5 +67,6 @@ bool	check_map(int fd, char *line, size_t line_n, t_data *data)
 	if (!ret || !find_player(data)
 		|| !flood_fill(data, data->player_x, data->player_y, &valid))
 		return (delete_data(data), false);
+	replace_doors(data);
 	return (true);
 }

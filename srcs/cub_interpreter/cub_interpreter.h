@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 02:02:19 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 20:50:59 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/12 15:25:43 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ typedef struct s_door
 {
 	int		x;
 	int		y;
-	bool	open;
-	bool	destroyed;
 }	t_door;
 
 typedef struct s_data
