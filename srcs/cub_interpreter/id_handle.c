@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 21:06:15 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 20:52:41 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:55:00 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int8_t	check_id(const char *id, size_t line, bool check_mod)
 		return (check_missing(dirs));
 	if (!id || !*id)
 		return (-1);
-	while (i < 7 && ft_strncmp(dirs_s[i], id, ft_strlen(dirs_s[i])))
+	while (i < 7 && ((ft_strlen(dirs_s[i]) != ft_strlen(id))
+			|| ft_strncmp(dirs_s[i], id, ft_strlen(dirs_s[i]))))
 		i++;
 	if (i == 7)
 		return (parse_error(INVALID, ID, line), -1);
