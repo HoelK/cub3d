@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:53:20 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 18:32:07 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/19 19:03:57 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ void	hooks(t_game *game)
 	mlx_hook(game->display.window, DESTROY, BPRESSMASK, close_game, game);
 	mlx_mouse_hook(game->display.window, mouse_click, game);
 	mlx_hook(game->display.window, MOTION, PMOTIONMASK, mouse_move, game);
-	mlx_mouse_move(game->display.main, game->display.window,
-		RES_X / 2, RES_Y / 2);
 	mlx_loop_hook(game->display.main, render, game);
 	mlx_loop(game->display.main);
 }

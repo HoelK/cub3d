@@ -6,11 +6,23 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 05:52:27 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:45:30 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/19 19:06:36 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "handlers.h"
+
+static void	free_gnl(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+}
 
 static bool	map_detected(const char *line)
 {
@@ -69,8 +81,9 @@ int	dump(char *file_path, t_data *data)
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (!check_id(NULL, 0, CHECK_MISSING)
-		|| !check_map(fd, line, line_n, data))
-		return (false);
-	return (ret);
+	if (!check_id(NULL, 0, CHECK_MISSING))
+		return (free_gnl(fd), close(fd), free(line), false);
+	if (!check_map(fd, line, line_n, data))
+		return (free_gnl(fd), close(fd), false);
+	return (close(fd), ret);
 }
