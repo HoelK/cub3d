@@ -50,20 +50,20 @@ This will generate the executable:
 
 ./cub3D
 
-Execution
+### Execution
 
 Run the program by providing a valid .cub configuration file:
 
 ./cub3D maps/example.cub
 
-Controls (default)
+### Controls (default)
     W / S — Move forward / backward
     A / D — Strafe left / right
     ← / → — Rotate camera left / right
     ESC — Exit the program
     Window close button — Exit cleanly
 
-Map Format (.cub)
+### Map Format (.cub)
 
 A .cub file includes:
     Texture paths for each wall direction (NO, SO, WE, EA)
@@ -89,30 +89,30 @@ C 225,30,0
 100001
 111111
 
-Technical Choices
+## Technical Choices
     Raycasting algorithm based on DDA (Digital Differential Analysis)
     Single-threaded rendering loop for simplicity and clarity
     Strict error handling for invalid maps and configuration files
     Manual memory management to comply with 42 standards
     MiniLibX used exclusively for window creation and pixel rendering
 
-Resources
-Raycasting & Graphics
+### Resources
+#### Raycasting & Graphics
     Lode Vandevenne – Raycasting Tutorial
     https://lodev.org/cgtutor/raycasting.html
     Wikipedia – Ray casting
     https://en.wikipedia.org/wiki/Ray_casting
     Wolfenstein 3D source code (historical reference)
 
-MiniLibX
+#### MiniLibX
     42 Docs – MiniLibX documentation
     Community tutorials and examples from 42 students
 
-C Programming
+#### C Programming
     The C Programming Language – Kernighan & Ritchie
     Linux man pages (man 3 mlx, man malloc, etc.)
 
-Use of AI
+### Use of AI
 
 AI tools were used only as a support resource, not as a code generator for the final project. Specifically:
     To clarify theoretical concepts such as raycasting mathematics and DDA logic
@@ -122,7 +122,7 @@ AI tools were used only as a support resource, not as a code generator for the f
 All implementation decisions, algorithms, and final code were written and validated by the project authors in compliance with 42 rules.
 Notes
 
-This project strictly follows the constraints and norms of the 42 cursus, including:
+### This project strictly follows the constraints and norms of the 42 cursus, including:
     No forbidden functions
     No memory leaks
     Norm-compliant C code
