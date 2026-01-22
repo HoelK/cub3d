@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 05:36:42 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/11 18:14:51 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:21:45 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,18 @@ bool	check_player(char c, size_t line_n)
 bool	check_map_line(char *line, size_t line_n)
 {
 	uint32_t		i;
-	bool			ret;
 
 	i = 0;
-	ret = true;
 	while (line[i] && line[i] != '\n')
 	{
 		if (!ft_isset(line[i], MAP_SET) || !check_player(line[i], line_n))
 		{
 			parse_error(INVALID, MAP, line_n);
-			ret = false;
+			return (false);
 		}
 		i++;
 	}
-	return (ret);
+	return (true);
 }
 
 bool	flood_fill(t_data *data, int x, int y, bool *closed)
@@ -89,7 +87,7 @@ bool	find_player(t_data *data)
 				return (true);
 			}
 		}
-		y = 0;
+		y = -1;
 	}
 	return (parse_error(MISSING, PLAYER, 0), false);
 }

@@ -6,7 +6,7 @@
 /*   By: hkeromne <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 18:58:39 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 19:11:58 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:01:10 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 static	void	write_usage(void)
 {
-	write(2, "Usage : ./cub3d <map.cub>\n", 26);
+	ft_write_error("Usage : ./cub3d <map.cub>\n");
 }
 
 void	write_error(uint8_t error)
 {
-	write(2, "cub3d: ", 7);
+	ft_write_error("cub3d: ");
 	if (error == TOO_MANY_ARGS)
-		(write(2, "Too Many Arguments\n", 19), write_usage());
+		(ft_write_error("Too Many Arguments\n"), write_usage());
 	else if (error == TOO_LITT_ARGS)
-		(write(2, "Not Enough Arguments\n", 21), write_usage());
+		(ft_write_error("Not Enough Arguments\n"), write_usage());
 	else if (error == INVALID_FORMAT)
-		write(2, "Invalid Format, Map must be .cub\n", 33);
+		ft_write_error("Invalid Format, Map must be .cub\n");
 	else if (error == INVALID_PATH)
-		write(2, "File does not exist or Missing Permissions\n", 43);
+		ft_write_error("File does not exist or Missing Permissions\n");
 	else if (error == INVALID_RES)
-		write(2, "Supported resolutions : 1920x1080\n", 35);
+		ft_write_error("Supported resolutions : 1920x1080\n");
 }
 
 void	ft_exit(ssize_t	error)

@@ -6,7 +6,7 @@
 /*   By: hkeromne <student@42lehavre.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 21:38:26 by hkeromne          #+#    #+#             */
-/*   Updated: 2026/01/12 21:20:15 by hkeromne         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:02:34 by hkeromne         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 void	put_frame(t_game *game, t_ray ray)
 {
-	int		i;
-	t_point	px;
-
-	px.x = ray.id;
 	init_ray(&ray, &game->dda);
-	i = ray.line_start - 1;
 	vertical_draw(game, ray);
 }
 
